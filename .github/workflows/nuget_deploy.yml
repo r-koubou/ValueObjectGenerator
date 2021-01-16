@@ -1,0 +1,23 @@
+name: nuget_deploy
+on:
+  push:
+    branches:
+      - release/*
+
+jobs:
+  nuget_deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '5.0.100'
+    - run: dotnet build --configuration Release Generator
+    - run: dotnet pack Generator --configuration Release --no-build -o ./publish
+    - uses: actions/upload-artifact@v2
+        with:
+          name: nuget
+          path: ./publish/
+    - run: dotnet nuget publish/*.nupkg -k $NUGET_API_TOKEN -s https://api.nuget.org/v3/index.json
+      env:
+        NUGET_API_TOKEN: ${{ secrets.NUGET_API_TOKEN }}

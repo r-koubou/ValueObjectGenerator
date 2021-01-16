@@ -1,0 +1,52 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <AssemblyName>ValueGenerator</AssemblyName>
+        <RootNamespace>ValueGenerator</RootNamespace>
+        <LangVersion>9</LangVersion>
+        <NoWarn>$(NoWarn);1591</NoWarn>
+        <Nullable>enable</Nullable>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <!-- NuGet -->
+        <PackageId>ValueGenerator</PackageId>
+        <Authors>R-Koubou</Authors>
+        <Copyright>R-Koubou</Copyright>
+        <RepositoryType>git</RepositoryType>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <Description>Generating code of value object by C# 9.0 SourceGenerator</Description>
+        <PackageProjectUrl>https://github.com/r-koubou/ValueGenerator</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/r-koubou/ValueGenerator.git</RepositoryUrl>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+        <None Update="ValueOfAttributeTemplate.tt">
+          <Generator>TextTemplatingFilePreprocessor</Generator>
+          <LastGenOutput>ValueOfAttributeTemplate.cs</LastGenOutput>
+        </None>
+        <None Update="ValueObjectTemplate.tt">
+          <Generator>TextTemplatingFilePreprocessor</Generator>
+          <LastGenOutput>ValueObjectTemplate.cs</LastGenOutput>
+        </None>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.8.0" PrivateAssets="all" />
+        <PackageReference Include="System.CodeDom" Version="5.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="ValueOfAttributeTemplate.cs">
+        <AutoGen>True</AutoGen>
+        <DesignTime>True</DesignTime>
+        <DependentUpon>ValueOfAttributeTemplate.tt</DependentUpon>
+      </Compile>
+      <Compile Update="ValueObjectTemplate.cs">
+        <AutoGen>True</AutoGen>
+        <DesignTime>True</DesignTime>
+        <DependentUpon>ValueObjectTemplate.tt</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+</Project>

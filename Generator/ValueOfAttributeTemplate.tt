@@ -1,0 +1,27 @@
+<#@ template language="C#" linePragmas="false" #>
+using System;
+
+namespace ValueGenerator
+{
+    [Flags]
+    internal enum OptionFlags
+    {
+        None = 0,
+        Validate = 1 << 0,
+        Implicit = 1 << 1,
+        Comparable = 1 << 2,
+    }
+
+    [AttributeUsage( AttributeTargets.Class, AllowMultiple = false )]
+    internal class ValueOfAttribute : Attribute
+    {
+        public Type Type { get; }
+        public OptionFlags Option { get; }
+
+        public ValueOfAttribute( Type type, OptionFlags option = OptionFlags.None )
+        {
+            Type   = type;
+            Option = option;
+        }
+    }
+}
