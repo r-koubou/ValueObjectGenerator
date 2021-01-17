@@ -12,7 +12,7 @@ namespace ValueObjectGenerator
     [Generator]
     public class SourceGenerator : ISourceGenerator
     {
-        private const string ValueOfAttributeName = "ValueOf";
+        private const string ValueOfAttributeName = "ValueObject";
 
         public void Initialize( GeneratorInitializationContext context )
         {
@@ -50,7 +50,7 @@ namespace ValueObjectGenerator
         #region ValueOfAttribute
         private static void GenerateValueOfAttribute( GeneratorExecutionContext context )
         {
-            context.AddSource( (string)ValueOfAttributeName, (string)new ValueOfAttributeTemplate().TransformText() );
+            context.AddSource( (string)ValueOfAttributeName, new ValueObjectAttributeTemplate().TransformText() );
         }
         #endregion
 
@@ -77,12 +77,12 @@ namespace ValueObjectGenerator
                     Namespace    = ns,
                     Name         = name,
                     BaseTypeName = baseTypeName,
-                    Option  = info.OptionFlags
+                    ValueOption  = info.ValueOption
                 };
 
                 var code = template.TransformText();
 
-                context.AddSource( (string)$"{ns}.{symbol.Name}", (string)code );
+                context.AddSource( (string)$"{ns}.{symbol.Name}", code );
             }
         }
 
@@ -141,12 +141,12 @@ namespace ValueObjectGenerator
         private static void CorrectValueOptionSyntax( ExpressionSyntax argumentExpr, ValueObjectContext classInfo )
         {
             var enumValue = Enum.Parse(
-                typeof(OptionFlags),
+                typeof(ValueOption),
                 argumentExpr.ToString()
-                            .Replace( $"{nameof(OptionFlags)}.", "" )
+                            .Replace( $"{nameof(ValueOption)}.", "" )
                             .Replace( "|", "," ) );
 
-            classInfo.OptionFlags = (OptionFlags)enumValue;
+            classInfo.ValueOption = (ValueOption)enumValue;
         }
 
         #endregion

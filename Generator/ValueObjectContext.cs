@@ -7,6 +7,6 @@ namespace ValueObjectGenerator
     {
         public TypeDeclarationSyntax Declaration { get; set; } = default!;
         public ITypeSymbol BaseValueType { get; set; } = default!;
-        public OptionFlags OptionFlags { get; set; } = OptionFlags.None;
+        public ValueOption ValueOption { get; set; } = ValueOption.None;
     }
 }

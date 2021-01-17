@@ -21,9 +21,9 @@
 
     <ItemGroup>
         <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
-        <None Update="ValueOfAttributeTemplate.tt">
+        <None Update="ValueObjectAttributeTemplate.tt">
           <Generator>TextTemplatingFilePreprocessor</Generator>
-          <LastGenOutput>ValueOfAttributeTemplate.cs</LastGenOutput>
+          <LastGenOutput>ValueObjectAttributeTemplate.cs</LastGenOutput>
         </None>
         <None Update="ValueObjectTemplate.tt">
           <Generator>TextTemplatingFilePreprocessor</Generator>
@@ -37,10 +37,10 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Compile Update="ValueOfAttributeTemplate.cs">
+      <Compile Update="ValueObjectAttributeTemplate.cs">
         <AutoGen>True</AutoGen>
         <DesignTime>True</DesignTime>
-        <DependentUpon>ValueOfAttributeTemplate.tt</DependentUpon>
+        <DependentUpon>ValueObjectAttributeTemplate.tt</DependentUpon>
       </Compile>
       <Compile Update="ValueObjectTemplate.cs">
         <AutoGen>True</AutoGen>

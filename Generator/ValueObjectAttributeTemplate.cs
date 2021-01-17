@@ -15,7 +15,7 @@ namespace ValueObjectGenerator
     /// Class to produce the template output
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "16.0.0.0")]
-    internal partial class ValueOfAttributeTemplate : ValueOfAttributeTemplateBase
+    internal partial class ValueObjectAttributeTemplate : ValueObjectAttributeTemplateBase
     {
 #line hidden
         /// <summary>
@@ -23,7 +23,7 @@ namespace ValueObjectGenerator
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("using System;\n\nnamespace ValueObjectGenerator\n{\n    [Flags]\n    internal enum OptionFlags\n    {\n        None = 0,\n        Validate = 1 << 0,\n        Implicit = 1 << 1,\n        Comparable = 1 << 2,\n    }\n\n    [AttributeUsage( AttributeTargets.Class, AllowMultiple = false )]\n    internal class ValueOfAttribute : Attribute\n    {\n        public Type Type { get; }\n        public OptionFlags Option { get; }\n\n        public ValueOfAttribute( Type type, OptionFlags option = OptionFlags.None )\n        {\n            Type   = type;\n            Option = option;\n        }\n    }\n}\n");
+            this.Write("using System;\n\nnamespace ValueObjectGenerator\n{\n    [Flags]\n    internal enum ValueOption\n    {\n        None = 0,\n        NonValidating = 1 << 0,\n        Implicit = 1 << 1,\n        Comparable = 1 << 2,\n    }\n\n    [AttributeUsage( AttributeTargets.Class, AllowMultiple = false )]\n    internal class ValueObjectAttribute : Attribute\n    {\n        public Type Type { get; }\n        public ValueOption Option { get; }\n\n        public ValueObjectAttribute( Type type, ValueOption option = ValueOption.None )\n        {\n            Type   = type;\n            Option = option;\n        }\n    }\n}\n");
             return this.GenerationEnvironment.ToString();
         }
     }
@@ -35,7 +35,7 @@ namespace ValueObjectGenerator
     /// Base class for this transformation
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "16.0.0.0")]
-    internal class ValueOfAttributeTemplateBase
+    internal class ValueObjectAttributeTemplateBase
     {
         #region Fields
         private global::System.Text.StringBuilder generationEnvironmentField;

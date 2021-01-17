@@ -6,16 +6,16 @@ using ValueObjectGenerator;
 
 namespace Tests
 {
-    [ValueOf( typeof(int) )]
+    [ValueObject( typeof(int), ValueOption.NonValidating )]
     public partial class IntObject {}
 
-    [ValueOf( typeof(int), OptionFlags.Implicit )]
+    [ValueObject( typeof(int), ValueOption.NonValidating | ValueOption.Implicit )]
     public partial class IntImplicitObject {}
 
-    [ValueOf( typeof(string), OptionFlags.Validate )]
+    [ValueObject( typeof(string) )]
     public partial class ValidatedString
     {
-        protected virtual partial string Validate( string value )
+        private static partial string Validate( string value )
         {
             if( string.IsNullOrEmpty( value ) )
             {
