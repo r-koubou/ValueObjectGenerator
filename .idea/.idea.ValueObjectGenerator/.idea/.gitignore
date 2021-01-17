@@ -5,6 +5,6 @@
 /contentModel.xml
 /modules.xml
 /projectSettingsUpdater.xml
-/.idea.ValueGenerator.iml
+/.idea.ValueObjectGenerator.iml
 # エディターベースの HTTP クライアントリクエスト
 /httpRequests/

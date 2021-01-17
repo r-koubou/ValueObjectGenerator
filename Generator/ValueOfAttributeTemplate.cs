@@ -7,7 +7,7 @@
 //     the code is regenerated.
 // </auto-generated>
 // ------------------------------------------------------------------------------
-namespace ValueGenerator
+namespace ValueObjectGenerator
 {
     using System;
 
@@ -15,7 +15,7 @@ namespace ValueGenerator
     /// Class to produce the template output
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "16.0.0.0")]
-    public partial class ValueOfAttributeTemplate : ValueOfAttributeTemplateBase
+    internal partial class ValueOfAttributeTemplate : ValueOfAttributeTemplateBase
     {
 #line hidden
         /// <summary>
@@ -23,7 +23,7 @@ namespace ValueGenerator
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("using System;\r\n\r\nnamespace ValueGenerator\r\n{\r\n    [Flags]\r\n    internal enum OptionFlags\r\n    {\r\n        None = 0,\r\n        Validate = 1 << 0,\r\n        Implicit = 1 << 1,\r\n        Comparable = 1 << 2,\r\n    }\r\n\r\n    [AttributeUsage( AttributeTargets.Class, AllowMultiple = false )]\r\n    internal class ValueOfAttribute : Attribute\r\n    {\r\n        public Type Type { get; }\r\n        public OptionFlags Option { get; }\r\n\r\n        public ValueOfAttribute( Type type, OptionFlags option = OptionFlags.None )\r\n        {\r\n            Type   = type;\r\n            Option = option;\r\n        }\r\n    }\r\n}\r\n");
+            this.Write("using System;\n\nnamespace ValueObjectGenerator\n{\n    [Flags]\n    internal enum OptionFlags\n    {\n        None = 0,\n        Validate = 1 << 0,\n        Implicit = 1 << 1,\n        Comparable = 1 << 2,\n    }\n\n    [AttributeUsage( AttributeTargets.Class, AllowMultiple = false )]\n    internal class ValueOfAttribute : Attribute\n    {\n        public Type Type { get; }\n        public OptionFlags Option { get; }\n\n        public ValueOfAttribute( Type type, OptionFlags option = OptionFlags.None )\n        {\n            Type   = type;\n            Option = option;\n        }\n    }\n}\n");
             return this.GenerationEnvironment.ToString();
         }
     }
@@ -35,7 +35,7 @@ namespace ValueGenerator
     /// Base class for this transformation
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "16.0.0.0")]
-    public class ValueOfAttributeTemplateBase
+    internal class ValueOfAttributeTemplateBase
     {
         #region Fields
         private global::System.Text.StringBuilder generationEnvironmentField;

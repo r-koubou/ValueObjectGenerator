@@ -2,21 +2,20 @@
 
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
-        <AssemblyName>ValueGenerator</AssemblyName>
-        <RootNamespace>ValueGenerator</RootNamespace>
+        <AssemblyName>ValueObjectGenerator</AssemblyName>
+        <RootNamespace>ValueObjectGenerator</RootNamespace>
         <LangVersion>9</LangVersion>
         <NoWarn>$(NoWarn);1591</NoWarn>
         <Nullable>enable</Nullable>
-        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <!-- NuGet -->
-        <PackageId>ValueGenerator</PackageId>
+        <PackageId>ValueObjectGenerator</PackageId>
         <Authors>R-Koubou</Authors>
         <Copyright>R-Koubou</Copyright>
         <RepositoryType>git</RepositoryType>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <Description>Generating code of value object by C# 9.0 SourceGenerator</Description>
-        <PackageProjectUrl>https://github.com/r-koubou/ValueGenerator</PackageProjectUrl>
-        <RepositoryUrl>https://github.com/r-koubou/ValueGenerator.git</RepositoryUrl>
+        <PackageProjectUrl>https://github.com/r-koubou/ValueObjectGenerator</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/r-koubou/ValueObjectGenerator.git</RepositoryUrl>
     </PropertyGroup>
 
     <ItemGroup>

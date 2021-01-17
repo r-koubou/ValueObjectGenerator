@@ -1,4 +1,4 @@
-using ValueGenerator;
+using ValueObjectGenerator;
 
 namespace Demo
 {

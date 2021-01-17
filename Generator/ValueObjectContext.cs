@@ -1,7 +1,7 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace ValueGenerator
+namespace ValueObjectGenerator
 {
     internal class ValueObjectContext
     {

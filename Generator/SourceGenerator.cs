@@ -7,7 +7,7 @@ using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace ValueGenerator
+namespace ValueObjectGenerator
 {
     [Generator]
     public class SourceGenerator : ISourceGenerator
@@ -50,7 +50,7 @@ namespace ValueGenerator
         #region ValueOfAttribute
         private static void GenerateValueOfAttribute( GeneratorExecutionContext context )
         {
-            context.AddSource( ValueOfAttributeName, new ValueOfAttributeTemplate().TransformText() );
+            context.AddSource( (string)ValueOfAttributeName, (string)new ValueOfAttributeTemplate().TransformText() );
         }
         #endregion
 
@@ -82,7 +82,7 @@ namespace ValueGenerator
 
                 var code = template.TransformText();
 
-                context.AddSource( $"{ns}.{symbol.Name}", code );
+                context.AddSource( (string)$"{ns}.{symbol.Name}", (string)code );
             }
         }
 

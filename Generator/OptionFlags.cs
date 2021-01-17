@@ -1,4 +1,4 @@
-namespace ValueGenerator
+namespace ValueObjectGenerator
 {
     [System.Flags]
     internal enum OptionFlags

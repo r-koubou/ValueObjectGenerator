@@ -2,7 +2,7 @@ using System;
 
 using NUnit.Framework;
 
-using ValueGenerator;
+using ValueObjectGenerator;
 
 namespace Tests
 {

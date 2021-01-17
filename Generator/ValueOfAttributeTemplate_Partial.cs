@@ -1,6 +1,6 @@
-namespace ValueGenerator
+namespace ValueObjectGenerator
 {
-    public partial class ValueOfAttributeTemplate
+    internal partial class ValueOfAttributeTemplate
     {
     }
 }

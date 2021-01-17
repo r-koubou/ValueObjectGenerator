@@ -7,15 +7,16 @@
 //     the code is regenerated.
 // </auto-generated>
 // ------------------------------------------------------------------------------
-namespace ValueGenerator
+namespace ValueObjectGenerator
 {
+    using ValueObjectGenerator;
     using System;
 
     /// <summary>
     /// Class to produce the template output
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "16.0.0.0")]
-    public partial class ValueObjectTemplate : ValueObjectTemplateBase
+    internal partial class ValueObjectTemplate : ValueObjectTemplateBase
     {
 #line hidden
         /// <summary>
@@ -204,7 +205,7 @@ namespace ValueGenerator
     /// Base class for this transformation
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "16.0.0.0")]
-    public class ValueObjectTemplateBase
+    internal class ValueObjectTemplateBase
     {
         #region Fields
         private global::System.Text.StringBuilder generationEnvironmentField;

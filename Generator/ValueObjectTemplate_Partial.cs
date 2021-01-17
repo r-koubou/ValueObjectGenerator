@@ -1,6 +1,6 @@
-namespace ValueGenerator
+namespace ValueObjectGenerator
 {
-    public partial class ValueObjectTemplate
+    internal partial class ValueObjectTemplate
     {
         internal string Namespace { get; set; } = string.Empty;
         internal string Name { get; set; } = string.Empty;
