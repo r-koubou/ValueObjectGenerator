@@ -4,6 +4,7 @@
         <TargetFramework>netstandard2.0</TargetFramework>
         <AssemblyName>ValueObjectGenerator</AssemblyName>
         <RootNamespace>ValueObjectGenerator</RootNamespace>
+        <AssemblyVersion>0.0.0</AssemblyVersion>
         <LangVersion>9</LangVersion>
         <NoWarn>$(NoWarn);1591</NoWarn>
         <Nullable>enable</Nullable>
