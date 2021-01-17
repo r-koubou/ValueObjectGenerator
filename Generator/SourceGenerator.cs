@@ -57,7 +57,7 @@ namespace ValueObjectGenerator
         #region ValueObject
         private static void GenerateValueObjectCode( GeneratorExecutionContext context, SyntaxReceiver receiver )
         {
-            var classes = CorrectClasses( context, receiver );
+            var classes = CollectClasses( context, receiver );
 
             foreach( var info in classes )
             {
@@ -86,7 +86,7 @@ namespace ValueObjectGenerator
             }
         }
 
-        private static IReadOnlyCollection<ValueObjectContext> CorrectClasses(
+        private static IReadOnlyCollection<ValueObjectContext> CollectClasses(
             GeneratorExecutionContext context,
             SyntaxReceiver receiver )
         {
@@ -114,8 +114,8 @@ namespace ValueObjectGenerator
 
                     switch( index )
                     {
-                        case 0: CorrectTypeOfSyntax( argumentExpr, semanticModel, classInfo ); break;
-                        case 1: CorrectValueOptionSyntax( argumentExpr, classInfo ); break;
+                        case 0: CollectTypeOfSyntax( argumentExpr, semanticModel, classInfo ); break;
+                        case 1: CollectValueOptionSyntax( argumentExpr, classInfo ); break;
                     }
                 }
 
@@ -125,7 +125,7 @@ namespace ValueObjectGenerator
             return list;
         }
 
-        private static void CorrectTypeOfSyntax( ExpressionSyntax argumentExpr, SemanticModel semanticModel, ValueObjectContext classInfo )
+        private static void CollectTypeOfSyntax( ExpressionSyntax argumentExpr, SemanticModel semanticModel, ValueObjectContext classInfo )
         {
             if( argumentExpr is TypeOfExpressionSyntax typeExpression )
             {
@@ -138,7 +138,7 @@ namespace ValueObjectGenerator
             }
         }
 
-        private static void CorrectValueOptionSyntax( ExpressionSyntax argumentExpr, ValueObjectContext classInfo )
+        private static void CollectValueOptionSyntax( ExpressionSyntax argumentExpr, ValueObjectContext classInfo )
         {
             var enumValue = Enum.Parse(
                 typeof(ValueOption),
