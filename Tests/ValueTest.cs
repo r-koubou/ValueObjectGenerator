@@ -2,7 +2,7 @@ using System;
 
 using NUnit.Framework;
 
-using SGFramework.Sample.ValueObject;
+using ValueObjectGenerator;
 
 namespace Tests
 {

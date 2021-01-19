@@ -1,6 +1,6 @@
 using System;
 
-using SGFramework.Sample.ValueObject;
+using ValueObjectGenerator;
 
 namespace Demo
 {

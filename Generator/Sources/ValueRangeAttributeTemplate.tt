@@ -3,7 +3,7 @@
 <#@ import namespace="System.Collections.Generic" #>
 using System;
 
-namespace SGFramework.Sample.ValueObject
+namespace ValueObjectGenerator
 {
     internal class ValueRangeAttribute : Attribute
     {
