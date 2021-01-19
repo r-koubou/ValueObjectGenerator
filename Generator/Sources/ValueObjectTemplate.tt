@@ -16,14 +16,19 @@ namespace <#= Namespace #>
 
         public <#= Name #>( <#= BaseTypeName #> value )
         {
-<# if( ValueOption.HasFlag( ValueOption.NonValidating ) ) { #>
+<# if( !string.IsNullOrEmpty( Min ) && !string.IsNullOrEmpty( Max ) ) { #>
+            if( value < (<#= Min #>) || value > (<#= Max #>) )
+            {
+                throw new ArgumentOutOfRangeException( $"<#= Name #> : {value} (range:<#= Min #> < <#= Max #>)" );
+            }
+<# } else if( ValueOption.HasFlag( ValueOption.NonValidating ) ) { #>
             Value = value;
 <# } else { #>
             Value = Validate( value );
 <# } #>
         }
 
-<# if( !ValueOption.HasFlag( ValueOption.NonValidating ) ) { #>
+<# if( ( string.IsNullOrEmpty( Min ) && string.IsNullOrEmpty( Max ) ) && !ValueOption.HasFlag( ValueOption.NonValidating ) ) { #>
         private static partial <#= BaseTypeName #> Validate( <#= BaseTypeName #> value );
 <# } #>
 

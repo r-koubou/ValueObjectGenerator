@@ -1,0 +1,19 @@
+﻿<#@ template language="C#" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+using System;
+
+namespace SGFramework.Sample.ValueObject
+{
+    internal class ValueRangeAttribute : Attribute
+    {
+        public object Min { get; set; }
+        public object Max { get; set; }
+
+        public ValueRangeAttribute( object min, object max )
+        {
+            Min  = min;
+            Max  = max;
+        }
+    }
+}

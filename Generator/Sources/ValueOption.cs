@@ -1,6 +1,8 @@
+using System;
+
 namespace ValueObjectGenerator
 {
-    [System.Flags]
+    [Flags]
     internal enum ValueOption
     {
         None = 0,

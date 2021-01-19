@@ -29,6 +29,18 @@
           <Generator>TextTemplatingFilePreprocessor</Generator>
           <LastGenOutput>ValueObjectTemplate.cs</LastGenOutput>
         </None>
+        <None Update="Sources\ValueObjectTemplate.tt">
+          <Generator>TextTemplatingFilePreprocessor</Generator>
+          <LastGenOutput>ValueObjectTemplate.cs</LastGenOutput>
+        </None>
+        <None Update="Sources\ValueObjectAttributeTemplate.tt">
+          <Generator>TextTemplatingFilePreprocessor</Generator>
+          <LastGenOutput>ValueObjectAttributeTemplate.cs</LastGenOutput>
+        </None>
+        <None Update="Sources\ValueRangeAttributeTemplate.tt">
+          <Generator>TextTemplatingFilePreprocessor</Generator>
+          <LastGenOutput>ValueRangeAttributeTemplate.cs</LastGenOutput>
+        </None>
     </ItemGroup>
 
     <ItemGroup>
@@ -46,6 +58,15 @@
         <AutoGen>True</AutoGen>
         <DesignTime>True</DesignTime>
         <DependentUpon>ValueObjectTemplate.tt</DependentUpon>
+      </Compile>
+      <Compile Update="Sources\ValueObjectTemplate.cs">
+        <DependentUpon>ValueObjectTemplate.tt</DependentUpon>
+      </Compile>
+      <Compile Update="Sources\ValueObjectAttributeTemplate.cs">
+        <DependentUpon>ValueObjectAttributeTemplate.tt</DependentUpon>
+      </Compile>
+      <Compile Update="Sources\ValueRangeAttributeTemplate.cs">
+        <DependentUpon>ValueRangeAttributeTemplate.tt</DependentUpon>
       </Compile>
     </ItemGroup>
 

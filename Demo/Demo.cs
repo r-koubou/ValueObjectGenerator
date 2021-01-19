@@ -1,6 +1,6 @@
 using System;
 
-using ValueObjectGenerator;
+using SGFramework.Sample.ValueObject;
 
 namespace Demo
 {
@@ -16,4 +16,9 @@ namespace Demo
             return value;
         }
     }
+
+    [ValueObject(typeof(int))]
+    [ValueRange(0, 255)]
+    public partial class Hp
+    {}
 }
