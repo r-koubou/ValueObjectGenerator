@@ -21,6 +21,7 @@ namespace <#= Namespace #>
             {
                 throw new ArgumentOutOfRangeException( $"<#= Name #> : {value} (range:<#= Min #> < <#= Max #>)" );
             }
+            Value = value;
 <# } else if( ValueOption.HasFlag( ValueOption.NonValidating ) ) { #>
             Value = value;
 <# } else { #>
@@ -79,7 +80,7 @@ namespace <#= Namespace #>
         public override int GetHashCode() => Value.GetHashCode();
 
         // Operator ==, !=
-        public static bool operator ==( <#= Name #> a, <#= Name #> b )
+        public static bool operator ==( [AllowNull] <#= Name #> a, [AllowNull] <#= Name #> b )
         {
             if( a is null && b is null )
             {
@@ -92,7 +93,7 @@ namespace <#= Namespace #>
             return a.Value.Equals( b.Value );
         }
 
-        public static bool operator !=( <#= Name #> a, <#= Name #> b )
+        public static bool operator !=( [AllowNull] <#= Name #> a, [AllowNull] <#= Name #> b )
         {
             if( a is null && b is null )
             {

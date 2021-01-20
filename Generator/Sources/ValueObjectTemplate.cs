@@ -98,7 +98,7 @@ namespace ValueObjectGenerator
 
             #line default
             #line hidden
-            this.Write(")\" );\n            }\n");
+            this.Write(")\" );\n            }\n            Value = value;\n");
  } else if( ValueOption.HasFlag( ValueOption.NonValidating ) ) {
 
             #line default
@@ -143,22 +143,22 @@ namespace ValueObjectGenerator
 
             #line default
             #line hidden
-            this.Write(")obj );\n        }\n\n        // HashCode\n        public override int GetHashCode() => Value.GetHashCode();\n\n        // Operator ==, !=\n        public static bool operator ==( ");
+            this.Write(")obj );\n        }\n\n        // HashCode\n        public override int GetHashCode() => Value.GetHashCode();\n\n        // Operator ==, !=\n        public static bool operator ==( [AllowNull] ");
             this.Write(this.ToStringHelper.ToStringWithCulture(Name));
 
             #line default
             #line hidden
-            this.Write(" a, ");
+            this.Write(" a, [AllowNull] ");
             this.Write(this.ToStringHelper.ToStringWithCulture(Name));
 
             #line default
             #line hidden
-            this.Write(" b )\n        {\n            if( a is null && b is null )\n            {\n                return true;\n            }\n            if( a is null || b is null )\n            {\n                return false;\n            }\n            return a.Value.Equals( b.Value );\n        }\n\n        public static bool operator !=( ");
+            this.Write(" b )\n        {\n            if( a is null && b is null )\n            {\n                return true;\n            }\n            if( a is null || b is null )\n            {\n                return false;\n            }\n            return a.Value.Equals( b.Value );\n        }\n\n        public static bool operator !=( [AllowNull] ");
             this.Write(this.ToStringHelper.ToStringWithCulture(Name));
 
             #line default
             #line hidden
-            this.Write(" a, ");
+            this.Write(" a, [AllowNull] ");
             this.Write(this.ToStringHelper.ToStringWithCulture(Name));
 
             #line default
