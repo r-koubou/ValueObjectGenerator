@@ -33,10 +33,25 @@ namespace <#= Namespace #>
         private static partial <#= BaseTypeName #> Validate( <#= BaseTypeName #> value );
 <# } #>
 
+<# if( !ValueOption.HasFlag( ValueOption.ToString ) ) { #>
+        //
+        // Default ToString()
+        //
         public override string ToString()
         {
             return Value.ToString();
         }
+<# } else { #>
+        //
+        // Custom ToString()
+        //
+        private partial string ToStringImpl();
+
+        public override string ToString()
+        {
+            return ToStringImpl();
+        }
+<# } #>
 
         //----------------------------------------------------------------------
         // Equality

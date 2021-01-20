@@ -133,7 +133,22 @@ namespace ValueObjectGenerator
 
             #line default
             #line hidden
-            this.Write("\n        public override string ToString()\n        {\n            return Value.ToString();\n        }\n\n        //----------------------------------------------------------------------\n        // Equality\n        //----------------------------------------------------------------------\n        public bool Equals( [AllowNull] ");
+            this.Write("\n");
+ if( !ValueOption.HasFlag( ValueOption.ToString ) ) {
+
+            #line default
+            #line hidden
+            this.Write("        //\n        // Default ToString()\n        //\n        public override string ToString()\n        {\n            return Value.ToString();\n        }\n");
+ } else {
+
+            #line default
+            #line hidden
+            this.Write("        //\n        // Custom ToString()\n        //\n        private partial string ToStringImpl();\n\n        public override string ToString()\n        {\n            return ToStringImpl();\n        }\n");
+ }
+
+            #line default
+            #line hidden
+            this.Write("\n        //----------------------------------------------------------------------\n        // Equality\n        //----------------------------------------------------------------------\n        public bool Equals( [AllowNull] ");
             this.Write(this.ToStringHelper.ToStringWithCulture(Name));
 
             #line default

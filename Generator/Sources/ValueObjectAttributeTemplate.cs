@@ -23,7 +23,7 @@ namespace ValueObjectGenerator
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("using System;\n\nnamespace ValueObjectGenerator\n{\n    [Flags]\n    internal enum ValueOption\n    {\n        None = 0,\n        NonValidating = 1 << 0,\n        Implicit = 1 << 1,\n        Comparable = 1 << 2,\n    }\n\n    [AttributeUsage( AttributeTargets.Class, AllowMultiple = false )]\n    internal class ValueObjectAttribute : Attribute\n    {\n        public Type Type { get; }\n        public ValueOption Option { get; }\n\n        public ValueObjectAttribute( Type type, ValueOption option = ValueOption.None )\n        {\n            Type   = type;\n            Option = option;\n        }\n    }\n}\n");
+            this.Write("using System;\n\nnamespace ValueObjectGenerator\n{\n    [Flags]\n    internal enum ValueOption\n    {\n        None = 0,\n        NonValidating = 1 << 0,\n        Implicit = 1 << 1,\n        Comparable = 1 << 2,\n        ToString = 1 << 3,\n    }\n\n    [AttributeUsage( AttributeTargets.Class, AllowMultiple = false )]\n    internal class ValueObjectAttribute : Attribute\n    {\n        public Type Type { get; }\n        public ValueOption Option { get; }\n\n        public ValueObjectAttribute( Type type, ValueOption option = ValueOption.None )\n        {\n            Type   = type;\n            Option = option;\n        }\n    }\n}\n");
             return this.GenerationEnvironment.ToString();
         }
     }
