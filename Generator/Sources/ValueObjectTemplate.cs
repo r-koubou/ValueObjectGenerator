@@ -9,7 +9,6 @@
 // ------------------------------------------------------------------------------
 namespace ValueObjectGenerator
 {
-    using System.Text.RegularExpressions;
     using System;
 
     /// <summary>
@@ -79,6 +78,10 @@ namespace ValueObjectGenerator
             #line default
             #line hidden
             this.Write(" value )\n        {\n");
+ /* Min, Max */
+
+            #line default
+            #line hidden
  if( !string.IsNullOrEmpty( Min ) && !string.IsNullOrEmpty( Max ) ) {
 
             #line default
@@ -114,6 +117,10 @@ namespace ValueObjectGenerator
             #line default
             #line hidden
             this.Write(" = value;\n");
+ /* No Validation */
+
+            #line default
+            #line hidden
  } else if( ValueOption.HasFlag( ValueOption.NonValidating ) ) {
 
             #line default
@@ -139,6 +146,10 @@ namespace ValueObjectGenerator
             #line default
             #line hidden
             this.Write("        }\n\n");
+ /* Validate method */
+
+            #line default
+            #line hidden
  if( ( string.IsNullOrEmpty( Min ) && string.IsNullOrEmpty( Max ) ) && !ValueOption.HasFlag( ValueOption.NonValidating ) ) {
 
             #line default
@@ -159,6 +170,10 @@ namespace ValueObjectGenerator
             #line default
             #line hidden
             this.Write("\n");
+ /* ToString */
+
+            #line default
+            #line hidden
  if( !ValueOption.HasFlag( ValueOption.ToString ) ) {
 
             #line default
@@ -203,47 +218,27 @@ namespace ValueObjectGenerator
 
             #line default
             #line hidden
-            this.Write(".GetHashCode();\n\n        // Operator ==, !=\n        public static bool operator ==( [AllowNull] ");
+            this.Write(".GetHashCode();\n\n        // Operator ==, !=\n        public static bool operator ==( ");
             this.Write(this.ToStringHelper.ToStringWithCulture(Name));
 
             #line default
             #line hidden
-            this.Write(" a, [AllowNull] ");
+            this.Write(" a, ");
             this.Write(this.ToStringHelper.ToStringWithCulture(Name));
 
             #line default
             #line hidden
-            this.Write(" b )\n        {\n            if( a is null && b is null )\n            {\n                return true;\n            }\n            if( a is null || b is null )\n            {\n                return false;\n            }\n            return a.");
-            this.Write(this.ToStringHelper.ToStringWithCulture(ValueName));
-
-            #line default
-            #line hidden
-            this.Write(".Equals( b.");
-            this.Write(this.ToStringHelper.ToStringWithCulture(ValueName));
-
-            #line default
-            #line hidden
-            this.Write(" );\n        }\n\n        public static bool operator !=( [AllowNull] ");
+            this.Write(" b )\n        {\n            if( ReferenceEquals( a, b ) )\n            {\n                return true;\n            }\n\n            return a?.Equals( b ) ?? ReferenceEquals( null, b );\n        }\n\n        public static bool operator !=( ");
             this.Write(this.ToStringHelper.ToStringWithCulture(Name));
 
             #line default
             #line hidden
-            this.Write(" a, [AllowNull] ");
+            this.Write(" a, ");
             this.Write(this.ToStringHelper.ToStringWithCulture(Name));
 
             #line default
             #line hidden
-            this.Write(" b )\n        {\n            if( a is null && b is null )\n            {\n                return false;\n            }\n            if( a is null || b is null )\n            {\n                return true;\n            }\n            return !a.");
-            this.Write(this.ToStringHelper.ToStringWithCulture(ValueName));
-
-            #line default
-            #line hidden
-            this.Write(".Equals( b.");
-            this.Write(this.ToStringHelper.ToStringWithCulture(ValueName));
-
-            #line default
-            #line hidden
-            this.Write(" );\n        }\n\n        //----------------------------------------------------------------------\n        // ");
+            this.Write(" b )\n        {\n            return !( a == b );\n        }\n\n        //----------------------------------------------------------------------\n        // ");
             this.Write(this.ToStringHelper.ToStringWithCulture(ValueOption.HasFlag( ValueOption.Implicit ) ? "Implicit" : "Explicit"));
 
             #line default
