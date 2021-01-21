@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Data;
 
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -12,39 +11,44 @@ namespace ValueObjectGenerator
     {
         public void ParseAttributeArgument(
             int argumentIndex,
+            AttributeArgumentSyntax argumentSyntax,
             SemanticModel semanticModel,
             ExpressionSyntax argumentExpression,
             IDictionary<AttributeParamName, object> result )
         {
-            switch( argumentIndex )
+            if( argumentIndex == 0 )
             {
-                case 0: CollectTypeOfSyntax( argumentExpression, semanticModel, result ); break;
-                case 1: CollectValueOptionSyntax( argumentExpression, result ); break;
+                AttributeArgumentParserHelper.ParseTypeOfExpression(
+                    argumentExpression,
+                    semanticModel,
+                    result,
+                    AttributeParameterNames.BaseName
+                );
             }
-        }
-
-        private static void CollectTypeOfSyntax(
-            ExpressionSyntax argumentExpr,
-            SemanticModel semanticModel,
-            IDictionary<AttributeParamName, object> result )
-        {
-            if( argumentExpr is TypeOfExpressionSyntax typeExpression )
+            else
             {
-                if( !( semanticModel.GetSymbolInfo( typeExpression.Type ).Symbol is ITypeSymbol symbol ) )
+                //
+                // named arguments
+                //
+
+                switch( argumentSyntax.NameEquals?.Name.ToString() )
                 {
-                    throw new SyntaxErrorException( "type is missing" );
+                    case "Option":
+                        AttributeArgumentParserHelper.ParseEnumExpression<ValueOption>(
+                            argumentExpression,
+                            result,
+                            AttributeParameterNames.OptionFlags
+                        );
+                        break;
+                    case "ValueName":
+                        AttributeArgumentParserHelper.ParseExpression(
+                            argumentExpression,
+                            result,
+                            AttributeParameterNames.ValueName
+                        );
+                        break;
                 }
-
-                result[ AttributeParameterNames.BaseName ] = symbol.ToString();
             }
-        }
-
-        private static void CollectValueOptionSyntax(
-            ExpressionSyntax argumentExpr,
-            IDictionary<AttributeParamName, object> result )
-        {
-            var enumValue = SyntaxUtility.ParseEnumValue<ValueOption>( argumentExpr );
-            result[ AttributeParameterNames.OptionFlags ] = enumValue;
         }
     }
 }

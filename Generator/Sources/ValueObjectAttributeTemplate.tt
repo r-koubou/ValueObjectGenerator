@@ -17,12 +17,12 @@ namespace ValueObjectGenerator
     internal class ValueObjectAttribute : Attribute
     {
         public Type Type { get; }
-        public ValueOption Option { get; }
+        public string ValueName { get; set; } = "Value";
+        public ValueOption Option { get; set; } = ValueOption.None;
 
-        public ValueObjectAttribute( Type type, ValueOption option = ValueOption.None )
+        public ValueObjectAttribute( Type type )
         {
-            Type   = type;
-            Option = option;
+            Type = type;
         }
     }
 }

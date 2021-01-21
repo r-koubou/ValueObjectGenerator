@@ -6,10 +6,10 @@ using ValueObjectGenerator;
 
 namespace Tests
 {
-    [ValueObject( typeof(int), ValueOption.NonValidating )]
+    [ValueObject( typeof(int), Option = ValueOption.NonValidating )]
     public partial class IntObject {}
 
-    [ValueObject( typeof(int), ValueOption.NonValidating | ValueOption.Implicit )]
+    [ValueObject( typeof(int), Option = ValueOption.NonValidating | ValueOption.Implicit )]
     public partial class IntImplicitObject {}
 
     [ValueObject( typeof(string) )]

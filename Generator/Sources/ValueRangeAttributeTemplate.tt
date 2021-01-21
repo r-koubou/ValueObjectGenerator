@@ -1,14 +1,12 @@
 ﻿<#@ template language="C#" #>
-<#@ import namespace="System.Text" #>
-<#@ import namespace="System.Collections.Generic" #>
 using System;
 
 namespace ValueObjectGenerator
 {
     internal class ValueRangeAttribute : Attribute
     {
-        public object Min { get; set; }
-        public object Max { get; set; }
+        public object Min { get; }
+        public object Max { get; }
 
         public ValueRangeAttribute( object min, object max )
         {

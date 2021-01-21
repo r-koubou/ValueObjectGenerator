@@ -11,23 +11,28 @@ namespace ValueObjectGenerator
     {
         public void ParseAttributeArgument(
             int argumentIndex,
+            AttributeArgumentSyntax argumentSyntax,
             SemanticModel semanticModel,
             ExpressionSyntax argumentExpression,
             IDictionary<AttributeParamName, object> result )
         {
             switch( argumentIndex )
             {
-                case 0: CollectTypeOfSyntax( argumentExpression, AttributeParameterNames.Min, result ); break;
-                case 1: CollectTypeOfSyntax( argumentExpression, AttributeParameterNames.Max, result ); break;
+                case 0:
+                    AttributeArgumentParserHelper.ParseExpression(
+                        argumentExpression,
+                        result,
+                        AttributeParameterNames.Min
+                    );
+                    break;
+                case 1:
+                    AttributeArgumentParserHelper.ParseExpression(
+                        argumentExpression,
+                        result,
+                        AttributeParameterNames.Max
+                    );
+                    break;
             }
-        }
-
-        private static void CollectTypeOfSyntax(
-            ExpressionSyntax argumentExpr,
-            AttributeParamName parameterName,
-            IDictionary<AttributeParamName, object> result )
-        {
-            result[ parameterName ] = argumentExpr.ToString();
         }
     }
 }

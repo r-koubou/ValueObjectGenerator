@@ -4,12 +4,12 @@ using ValueObjectGenerator;
 
 namespace Demo
 {
-    [ValueObject(typeof(int))]
+    [ValueObject(typeof(int), ValueName ="Point")]
     [ValueRange(0, 9999)]
     public partial class Hp
     {}
 
-    [ValueObject(typeof(Guid), ValueOption.NonValidating | ValueOption.ToString)]
+    [ValueObject(typeof(Guid), Option = ValueOption.NonValidating | ValueOption.ToString)]
     public partial class MyGuid
     {
         private partial string ToStringImpl()

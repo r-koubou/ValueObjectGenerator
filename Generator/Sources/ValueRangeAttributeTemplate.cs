@@ -9,8 +9,6 @@
 // ------------------------------------------------------------------------------
 namespace ValueObjectGenerator
 {
-    using System.Text;
-    using System.Collections.Generic;
     using System;
 
     /// <summary>
@@ -25,7 +23,7 @@ namespace ValueObjectGenerator
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("using System;\n\nnamespace ValueObjectGenerator\n{\n    internal class ValueRangeAttribute : Attribute\n    {\n        public object Min { get; set; }\n        public object Max { get; set; }\n\n        public ValueRangeAttribute( object min, object max )\n        {\n            Min  = min;\n            Max  = max;\n        }\n    }\n}\n");
+            this.Write("using System;\n\nnamespace ValueObjectGenerator\n{\n    internal class ValueRangeAttribute : Attribute\n    {\n        public object Min { get; }\n        public object Max { get; }\n\n        public ValueRangeAttribute( object min, object max )\n        {\n            Min  = min;\n            Max  = max;\n        }\n    }\n}\n");
             return this.GenerationEnvironment.ToString();
         }
     }

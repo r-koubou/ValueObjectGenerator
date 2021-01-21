@@ -41,6 +41,8 @@
           <Generator>TextTemplatingFilePreprocessor</Generator>
           <LastGenOutput>ValueRangeAttributeTemplate.cs</LastGenOutput>
         </None>
+        <Compile Remove="Sources\Temp.cs" />
+        <None Include="Sources\Temp.cs" />
     </ItemGroup>
 
     <ItemGroup>

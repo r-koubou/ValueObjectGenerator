@@ -135,6 +135,7 @@ namespace ValueObjectGenerator.SGFramework.TypeDeclaration
 
                     parser.ParseAttributeArgument(
                         index,
+                        argument,
                         context.SemanticModel,
                         argumentExpression,
                         attributeParameters
