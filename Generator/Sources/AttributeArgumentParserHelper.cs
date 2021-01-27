@@ -5,7 +5,7 @@ using System.Data;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-using ValueObjectGenerator.SGFramework;
+using SGFramework;
 
 namespace ValueObjectGenerator
 {

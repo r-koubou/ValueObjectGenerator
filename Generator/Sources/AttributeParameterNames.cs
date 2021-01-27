@@ -1,4 +1,4 @@
-using ValueObjectGenerator.SGFramework;
+using SGFramework;
 
 namespace ValueObjectGenerator
 {

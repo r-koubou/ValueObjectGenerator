@@ -20,7 +20,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
         <None Update="ValueObjectAttributeTemplate.tt">
           <Generator>TextTemplatingFilePreprocessor</Generator>
           <LastGenOutput>ValueObjectAttributeTemplate.cs</LastGenOutput>
@@ -44,11 +43,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.8.0" PrivateAssets="all" />
-        <PackageReference Include="System.CodeDom" Version="5.0.0" />
-    </ItemGroup>
-
-    <ItemGroup>
       <Compile Update="ValueObjectAttributeTemplate.cs">
         <AutoGen>True</AutoGen>
         <DesignTime>True</DesignTime>
@@ -68,6 +62,13 @@
       <Compile Update="Sources\ValueRangeAttributeTemplate.cs">
         <DependentUpon>ValueRangeAttributeTemplate.tt</DependentUpon>
       </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.8.0" PrivateAssets="all" />
+        <PackageReference Include="SGFramework" Version="0.0.1" />
+        <PackageReference Include="System.CodeDom" Version="5.0.0" />
     </ItemGroup>
 
 </Project>

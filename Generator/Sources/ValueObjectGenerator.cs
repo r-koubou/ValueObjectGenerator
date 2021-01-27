@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-using ValueObjectGenerator.SGFramework;
-using ValueObjectGenerator.SGFramework.TypeDeclaration;
+using SGFramework;
+using SGFramework.TypeDeclaration;
 
 namespace ValueObjectGenerator
 {
@@ -13,10 +13,6 @@ namespace ValueObjectGenerator
     {
         private static readonly AttributeTypeName ValueObjectAttributeTypeName = new ( "ValueObject" );
         private static readonly AttributeTypeName ValueRangeAttributeTypeName = new ( "ValueRange" );
-
-#if DEBUG
-        protected override bool LaunchDebuggerOnInit => false;
-#endif
 
         protected override TypeDeclarationSyntaxReceiver CreateReceiver()
             => new( this );
