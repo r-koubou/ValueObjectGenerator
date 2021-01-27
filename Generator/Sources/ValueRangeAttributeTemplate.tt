@@ -1,0 +1,17 @@
+﻿<#@ template language="C#" #>
+using System;
+
+namespace ValueObjectGenerator
+{
+    internal class ValueRangeAttribute : Attribute
+    {
+        public object Min { get; }
+        public object Max { get; }
+
+        public ValueRangeAttribute( object min, object max )
+        {
+            Min  = min;
+            Max  = max;
+        }
+    }
+}

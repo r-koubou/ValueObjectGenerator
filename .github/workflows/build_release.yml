@@ -21,8 +21,8 @@ jobs:
     - run: dotnet pack --configuration Release --no-build -p:Version=${{ env.VER_TAG }} -o ./publish Generator
     - uses: actions/upload-artifact@v2
       with:
-        name: nuget
+        name: ValueObjectGenerator-${{ env.VER_TAG }}
         path: ./publish/
-    - run: dotnet nuget publish/*.nupkg -k $NUGET_API_TOKEN -s https://api.nuget.org/v3/index.json
+    - run: dotnet nuget push publish/*.nupkg -k $NUGET_API_TOKEN -s https://api.nuget.org/v3/index.json
       env:
         NUGET_API_TOKEN: ${{ secrets.NUGET_API_TOKEN }}

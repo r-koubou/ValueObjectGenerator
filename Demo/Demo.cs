@@ -4,16 +4,16 @@ using ValueObjectGenerator;
 
 namespace Demo
 {
-    [ValueObject( typeof(int) )]
-    public partial class Id
+    [ValueObject(typeof(int), ValueName ="Point")]
+    [ValueRange(0, 9999)]
+    public partial class Hp
+    {}
+
+    [ValueObject(typeof(Guid), Option = ValueOption.NonValidating | ValueOption.ToString)]
+    public partial class MyGuid
     {
-        private static partial int Validate( int value )
-        {
-            if( value < 0 )
-            {
-                throw new ArgumentException( "value must be grater than 0" );
-            }
-            return value;
-        }
+        private partial string ToStringImpl()
+            => Value.ToString( "D" );
+
     }
 }
