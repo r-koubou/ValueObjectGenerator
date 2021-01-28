@@ -14,10 +14,10 @@ namespace ValueObjectGenerator
         private static readonly AttributeTypeName ValueObjectAttributeTypeName = new ( "ValueObject" );
         private static readonly AttributeTypeName ValueRangeAttributeTypeName = new ( "ValueRange" );
 
-        protected override TypeDeclarationSyntaxReceiver CreateReceiver()
+        public override TypeDeclarationSyntaxReceiver CreateSyntaxReceiver()
             => new( this );
 
-        protected override void SetupAttributeArgumentParser( Dictionary<AttributeTypeName, IAttributeArgumentParser> map )
+        public override void SetupAttributeArgumentParser( Dictionary<AttributeTypeName, IAttributeArgumentParser> map )
         {
             map[ ValueObjectAttributeTypeName ] = new ValueObjectAttributeArgumentParser();
             map[ ValueRangeAttributeTypeName ]  = new ValueRangeAttributeArgumentParser();
@@ -27,7 +27,7 @@ namespace ValueObjectGenerator
             attributeTypeName == ValueObjectAttributeTypeName ||
             attributeTypeName == ValueRangeAttributeTypeName;
 
-        protected override void GenerateAttributeCode( GeneratorExecutionContext context )
+        public override void GenerateAttributeCode( GeneratorExecutionContext context )
         {
             context.AddSource( ValueObjectAttributeTypeName.Value, new ValueObjectAttributeTemplate().TransformText() );
             context.AddSource( ValueRangeAttributeTypeName.Value, new ValueRangeAttributeTemplate().TransformText() );
