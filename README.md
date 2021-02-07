@@ -117,7 +117,7 @@ public partial class Hp : IEquatable<Hp>
 ```c#
 [ValueObject(typeof(int))]
 // Set an explicit range of values
-[Range(0, 9999)]
+[ValueRange(0, 9999)]
 public partial class Count
 {}
 ```
@@ -148,7 +148,7 @@ public partial class Count : IEquatable<Count>
 
 ```c#
 [ValueObject(typeof(int))]
-[NonNegative]
+[ValueNonNegative]
 public partial class Count
 {}
 ```

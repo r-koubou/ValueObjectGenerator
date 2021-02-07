@@ -30,7 +30,7 @@ namespace Tests
     public partial struct StructValue {}
 
     [ValueObject( typeof(int))]
-    [NonNegative]
+    [ValueNonNegative]
     public partial struct NonNegativeValue {}
 
     public class ValueTest

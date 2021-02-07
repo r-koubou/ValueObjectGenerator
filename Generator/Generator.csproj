@@ -36,13 +36,13 @@
           <Generator>TextTemplatingFilePreprocessor</Generator>
           <LastGenOutput>ValueObjectAttributeTemplate.cs</LastGenOutput>
         </None>
-        <None Update="Sources\RangeAttributeTemplate.tt">
+        <None Update="Sources\ValueRangeAttributeTemplate.tt">
           <Generator>TextTemplatingFilePreprocessor</Generator>
-          <LastGenOutput>RangeAttributeTemplate.cs</LastGenOutput>
+          <LastGenOutput>ValueRangeAttributeTemplate.cs</LastGenOutput>
         </None>
-        <None Update="Sources\NonNegativeAttributeTemplate.tt">
+        <None Update="Sources\ValueNonNegativeAttributeTemplate.tt">
           <Generator>TextTemplatingFilePreprocessor</Generator>
-          <LastGenOutput>NonNegativeAttributeTemplate.cs</LastGenOutput>
+          <LastGenOutput>ValueNonNegativeAttributeTemplate.cs</LastGenOutput>
         </None>
     </ItemGroup>
 
@@ -63,13 +63,13 @@
       <Compile Update="Sources\ValueObjectAttributeTemplate.cs">
         <DependentUpon>ValueObjectAttributeTemplate.tt</DependentUpon>
       </Compile>
-      <Compile Update="Sources\RangeAttributeTemplate.cs">
-        <DependentUpon>RangeAttributeTemplate.tt</DependentUpon>
+      <Compile Update="Sources\ValueRangeAttributeTemplate.cs">
+        <DependentUpon>ValueRangeAttributeTemplate.tt</DependentUpon>
       </Compile>
-      <Compile Update="Sources\NonNegativeAttributeTemplate.cs">
+      <Compile Update="Sources\ValueNonNegativeAttributeTemplate.cs">
         <AutoGen>True</AutoGen>
         <DesignTime>True</DesignTime>
-        <DependentUpon>NonNegativeAttributeTemplate.tt</DependentUpon>
+        <DependentUpon>ValueNonNegativeAttributeTemplate.tt</DependentUpon>
       </Compile>
     </ItemGroup>
 

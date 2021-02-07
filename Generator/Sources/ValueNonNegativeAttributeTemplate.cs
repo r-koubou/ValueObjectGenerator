@@ -15,7 +15,7 @@ namespace ValueObjectGenerator
     /// Class to produce the template output
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "16.0.0.0")]
-    internal partial class NonNegativeAttributeTemplate : NonNegativeAttributeTemplateBase
+    internal partial class ValueNonNegativeAttributeTemplate : ValueNonNegativeAttributeTemplateBase
     {
 #line hidden
         /// <summary>
@@ -23,7 +23,7 @@ namespace ValueObjectGenerator
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("using System;\n\nnamespace ValueObjectGenerator\n{\n    internal class NonNegativeAttribute : Attribute\n    {\n        public NonNegativeAttribute() {}\n    }\n}\n");
+            this.Write("using System;\n\nnamespace ValueObjectGenerator\n{\n    internal class ValueNonNegativeAttribute : Attribute\n    {\n        public ValueNonNegativeAttribute() {}\n    }\n}\n");
             return this.GenerationEnvironment.ToString();
         }
     }
@@ -35,7 +35,7 @@ namespace ValueObjectGenerator
     /// Base class for this transformation
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "16.0.0.0")]
-    internal class NonNegativeAttributeTemplateBase
+    internal class ValueNonNegativeAttributeTemplateBase
     {
         #region Fields
         private global::System.Text.StringBuilder generationEnvironmentField;

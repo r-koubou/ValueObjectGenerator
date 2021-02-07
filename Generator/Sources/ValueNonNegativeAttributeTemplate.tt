@@ -3,8 +3,8 @@ using System;
 
 namespace ValueObjectGenerator
 {
-    internal class NonNegativeAttribute : Attribute
+    internal class ValueNonNegativeAttribute : Attribute
     {
-        public NonNegativeAttribute() {}
+        public ValueNonNegativeAttribute() {}
     }
 }

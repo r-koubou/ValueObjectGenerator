@@ -15,7 +15,7 @@ namespace ValueObjectGenerator
     /// Class to produce the template output
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "16.0.0.0")]
-    internal partial class RangeAttributeTemplate : RangeAttributeTemplateBase
+    internal partial class ValueRangeAttributeTemplate : ValueRangeAttributeTemplateBase
     {
 #line hidden
         /// <summary>
@@ -23,7 +23,7 @@ namespace ValueObjectGenerator
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("using System;\n\nnamespace ValueObjectGenerator\n{\n    internal class RangeAttribute : Attribute\n    {\n        public object Min { get; }\n        public object Max { get; }\n\n        public RangeAttribute( object min, object max )\n        {\n            Min  = min;\n            Max  = max;\n        }\n    }\n}\n");
+            this.Write("using System;\n\nnamespace ValueObjectGenerator\n{\n    internal class ValueRangeAttribute : Attribute\n    {\n        public object Min { get; }\n        public object Max { get; }\n\n        public ValueRangeAttribute( object min, object max )\n        {\n            Min  = min;\n            Max  = max;\n        }\n    }\n}\n");
             return this.GenerationEnvironment.ToString();
         }
     }
@@ -35,7 +35,7 @@ namespace ValueObjectGenerator
     /// Base class for this transformation
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "16.0.0.0")]
-    internal class RangeAttributeTemplateBase
+    internal class ValueRangeAttributeTemplateBase
     {
         #region Fields
         private global::System.Text.StringBuilder generationEnvironmentField;

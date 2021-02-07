@@ -12,8 +12,8 @@ namespace ValueObjectGenerator
     internal class ValueObjectGenerator : SourceGenerator<TypeDeclarationSyntaxReceiver>, IAttributeContainsChecker
     {
         private static readonly AttributeTypeName ValueObjectAttributeTypeName = new ( "ValueObject" );
-        private static readonly AttributeTypeName RangeAttributeTypeName = new ( "Range" );
-        private static readonly AttributeTypeName NonNegativeAttributeTypeName = new ( "NonNegative" );
+        private static readonly AttributeTypeName RangeAttributeTypeName = new ( "ValueRange" );
+        private static readonly AttributeTypeName NonNegativeAttributeTypeName = new ( "ValueNonNegative" );
 
         public override TypeDeclarationSyntaxReceiver CreateSyntaxReceiver()
             => new( this );
@@ -33,8 +33,8 @@ namespace ValueObjectGenerator
         public override void GenerateAttributeCode( GeneratorExecutionContext context )
         {
             context.AddSource( ValueObjectAttributeTypeName.Value, new ValueObjectAttributeTemplate().TransformText() );
-            context.AddSource( RangeAttributeTypeName.Value,       new RangeAttributeTemplate().TransformText() );
-            context.AddSource( NonNegativeAttributeTypeName.Value, new NonNegativeAttributeTemplate().TransformText() );
+            context.AddSource( RangeAttributeTypeName.Value,       new ValueRangeAttributeTemplate().TransformText() );
+            context.AddSource( NonNegativeAttributeTypeName.Value, new ValueNonNegativeAttributeTemplate().TransformText() );
         }
 
         protected override string GenerateCode(

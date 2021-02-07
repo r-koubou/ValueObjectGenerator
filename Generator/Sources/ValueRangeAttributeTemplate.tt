@@ -3,12 +3,12 @@ using System;
 
 namespace ValueObjectGenerator
 {
-    internal class RangeAttribute : Attribute
+    internal class ValueRangeAttribute : Attribute
     {
         public object Min { get; }
         public object Max { get; }
 
-        public RangeAttribute( object min, object max )
+        public ValueRangeAttribute( object min, object max )
         {
             Min  = min;
             Max  = max;

@@ -27,14 +27,14 @@ namespace Demo
 
     [ValueObject( typeof(int))]
     // NonNegative: Cannot assign a negative number
-    [NonNegative]
+    [ValueNonNegative]
     public partial class NonNegativeValue
     {}
 
     // Explicitly set the name of the value variable
     [ValueObject( typeof(int), ValueName = "Point" )]
     // Set an explicit range of values
-    [Range( 0, 9999 )]
+    [ValueRange( 0, 9999 )]
     public partial class Hp
     {}
 
