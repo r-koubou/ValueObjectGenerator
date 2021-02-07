@@ -32,9 +32,13 @@ namespace ValueObjectGenerator
         declarationType = "struct";
     }
 
+    var requireNonEmptyString = NonEmptyString;
+    var requireEmptyString = EmptyString;
     var requireNonNegative = NonNegative;
     var requireMinMax = !string.IsNullOrEmpty( Min ) && !string.IsNullOrEmpty( Max );
     var requireValidateMethod =
+        !requireNonEmptyString &&
+        !requireEmptyString &&
         !requireNonNegative &&
         !requireMinMax &&
         !ValueOption.HasFlag( ValueOption.NonValidating );
@@ -98,11 +102,40 @@ namespace ValueObjectGenerator
             #line default
             #line hidden
             this.Write(" value )\n        {\n");
+ /* Empty String */
+
+            #line default
+            #line hidden
+ if( requireNonEmptyString ) {
+
+            #line default
+            #line hidden
+            this.Write("            if( value.Trim().Length == 0 )\n            {\n                throw new ArgumentException( $\"(");
+            this.Write(this.ToStringHelper.ToStringWithCulture(Name));
+
+            #line default
+            #line hidden
+            this.Write(") : value is empty string\" );\n            }\n            ");
+            this.Write(this.ToStringHelper.ToStringWithCulture(ValueName));
+
+            #line default
+            #line hidden
+            this.Write(" = value;\n");
+ } else if( requireEmptyString ) {
+
+            #line default
+            #line hidden
+            this.Write("            ");
+            this.Write(this.ToStringHelper.ToStringWithCulture(ValueName));
+
+            #line default
+            #line hidden
+            this.Write(" = value.Trim().Length == 0 ? string.Empty : value;\n");
  /* Non-Negative */
 
             #line default
             #line hidden
- if( requireNonNegative ) {
+ } else if( requireNonNegative ) {
 
             #line default
             #line hidden

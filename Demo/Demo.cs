@@ -44,6 +44,15 @@ namespace Demo
     {
         private partial string ToStringImpl()
             => Value.ToString( "D" );
-
     }
+
+    [ValueObject(typeof(string))]
+    [ValueEmptyString]
+    public partial class AllowEmptyString
+    {}
+
+    [ValueObject( typeof(string))]
+    [ValueNonEmptyString]
+    public partial class NotAllowEmptyString
+    {}
 }

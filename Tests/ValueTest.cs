@@ -33,6 +33,10 @@ namespace Tests
     [ValueNonNegative]
     public partial struct NonNegativeValue {}
 
+    [ValueObject( typeof(string))]
+    [ValueNonEmptyString]
+    public partial struct NonEmptyValue {}
+
     public class ValueTest
     {
         [Test]
@@ -90,6 +94,14 @@ namespace Tests
         {
             Assert.DoesNotThrow( () => _ = new NonNegativeValue( 0 ) );
             Assert.Throws<ArgumentException>( () => _ = new NonNegativeValue( -1 ) );
+        }
+
+        [Test]
+        public void CannotAssignEmptyStringTest()
+        {
+            Assert.DoesNotThrow( () => _              = new NonEmptyValue( "Hello" ) );
+            Assert.Throws<ArgumentException>( () => _ = new NonEmptyValue( "" ) );
+            Assert.Throws<ArgumentException>( () => _ = new NonEmptyValue( "     " ) );
         }
 
     }

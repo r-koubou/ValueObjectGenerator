@@ -14,27 +14,35 @@ namespace ValueObjectGenerator
         private static readonly AttributeTypeName ValueObjectAttributeTypeName = new ( "ValueObject" );
         private static readonly AttributeTypeName RangeAttributeTypeName = new ( "ValueRange" );
         private static readonly AttributeTypeName NonNegativeAttributeTypeName = new ( "ValueNonNegative" );
+        private static readonly AttributeTypeName EmptyStringAttributeTypeName = new ( "ValueEmptyString" );
+        private static readonly AttributeTypeName NonEmptyStringAttributeTypeName = new ( "ValueNonEmptyString" );
 
         public override TypeDeclarationSyntaxReceiver CreateSyntaxReceiver()
             => new( this );
 
         public override void SetupAttributeArgumentParser( Dictionary<AttributeTypeName, IAttributeArgumentParser> map )
         {
-            map[ ValueObjectAttributeTypeName ] = new ValueObjectAttributeArgumentParser();
-            map[ RangeAttributeTypeName ]       = new RangeAttributeArgumentParser();
-            map[ NonNegativeAttributeTypeName ] = new EmptyAttributeArgumentParser();
+            map[ ValueObjectAttributeTypeName ]    = new ValueObjectAttributeArgumentParser();
+            map[ RangeAttributeTypeName ]          = new RangeAttributeArgumentParser();
+            map[ NonNegativeAttributeTypeName ]    = new EmptyAttributeArgumentParser();
+            map[ EmptyStringAttributeTypeName ]    = new EmptyAttributeArgumentParser();
+            map[ NonEmptyStringAttributeTypeName ] = new EmptyAttributeArgumentParser();
         }
 
         public bool ContainsAttribute( AttributeTypeName attributeTypeName ) =>
             attributeTypeName == ValueObjectAttributeTypeName ||
             attributeTypeName == RangeAttributeTypeName ||
-            attributeTypeName == NonNegativeAttributeTypeName;
+            attributeTypeName == NonNegativeAttributeTypeName ||
+            attributeTypeName == EmptyStringAttributeTypeName ||
+            attributeTypeName == NonEmptyStringAttributeTypeName;
 
         public override void GenerateAttributeCode( GeneratorExecutionContext context )
         {
             context.AddSource( ValueObjectAttributeTypeName.Value, new ValueObjectAttributeTemplate().TransformText() );
             context.AddSource( RangeAttributeTypeName.Value,       new ValueRangeAttributeTemplate().TransformText() );
             context.AddSource( NonNegativeAttributeTypeName.Value, new ValueNonNegativeAttributeTemplate().TransformText() );
+            context.AddSource( EmptyStringAttributeTypeName.Value, new ValueEmptyStringAttributeTemplate().TransformText() );
+            context.AddSource( NonEmptyStringAttributeTypeName.Value, new ValueNonEmptyStringAttributeTemplate().TransformText() );
         }
 
         protected override string GenerateCode(
@@ -59,6 +67,16 @@ namespace ValueObjectGenerator
             {
                 // "ValueObject" is NOT Require attribute
                 nonNegativeAttributeParams = null!;
+            }
+            if( !attributeTypeList.TryGetValue( EmptyStringAttributeTypeName, out var emptyStringAttributeParams ))
+            {
+                // "ValueObject" is NOT Require attribute
+                emptyStringAttributeParams = null!;
+            }
+            if( !attributeTypeList.TryGetValue( NonEmptyStringAttributeTypeName, out var nonEmptyStringAttributeParams ))
+            {
+                // "ValueObject" is NOT Require attribute
+                nonEmptyStringAttributeParams = null!;
             }
             #endregion
 
@@ -105,7 +123,9 @@ namespace ValueObjectGenerator
                 ValueOption  = (ValueOption)valueOption,
                 Min          = minValue.ToString(),
                 Max          = maxValue.ToString(),
-                NonNegative  = nonNegativeAttributeParams != null
+                NonNegative  = nonNegativeAttributeParams != null,
+                EmptyString  = emptyStringAttributeParams != null,
+                NonEmptyString  = nonEmptyStringAttributeParams != null
             };
 
             var code = template.TransformText();

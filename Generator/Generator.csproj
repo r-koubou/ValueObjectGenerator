@@ -44,6 +44,14 @@
           <Generator>TextTemplatingFilePreprocessor</Generator>
           <LastGenOutput>ValueNonNegativeAttributeTemplate.cs</LastGenOutput>
         </None>
+        <None Update="Sources\ValueEmptyStringAttributeTemplate.tt">
+          <Generator>TextTemplatingFilePreprocessor</Generator>
+          <LastGenOutput>ValueEmptyStringAttributeTemplate.cs</LastGenOutput>
+        </None>
+        <None Update="Sources\ValueNonEmptyStringAttributeTemplate.tt">
+          <Generator>TextTemplatingFilePreprocessor</Generator>
+          <LastGenOutput>ValueNonEmptyStringAttributeTemplate.cs</LastGenOutput>
+        </None>
     </ItemGroup>
 
     <ItemGroup>
@@ -70,6 +78,16 @@
         <AutoGen>True</AutoGen>
         <DesignTime>True</DesignTime>
         <DependentUpon>ValueNonNegativeAttributeTemplate.tt</DependentUpon>
+      </Compile>
+      <Compile Update="Sources\ValueEmptyStringAttributeTemplate.cs">
+        <AutoGen>True</AutoGen>
+        <DesignTime>True</DesignTime>
+        <DependentUpon>ValueEmptyStringAttributeTemplate.tt</DependentUpon>
+      </Compile>
+      <Compile Update="Sources\ValueNonEmptyStringAttributeTemplate.cs">
+        <AutoGen>True</AutoGen>
+        <DesignTime>True</DesignTime>
+        <DependentUpon>ValueNonEmptyStringAttributeTemplate.tt</DependentUpon>
       </Compile>
     </ItemGroup>
 

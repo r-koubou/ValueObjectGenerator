@@ -14,9 +14,13 @@ using System.Diagnostics.CodeAnalysis;
         declarationType = "struct";
     }
 
+    var requireNonEmptyString = NonEmptyString;
+    var requireEmptyString = EmptyString;
     var requireNonNegative = NonNegative;
     var requireMinMax = !string.IsNullOrEmpty( Min ) && !string.IsNullOrEmpty( Max );
     var requireValidateMethod =
+        !requireNonEmptyString &&
+        !requireEmptyString &&
         !requireNonNegative &&
         !requireMinMax &&
         !ValueOption.HasFlag( ValueOption.NonValidating );
@@ -32,8 +36,17 @@ namespace <#= Namespace #>
 
         public <#= Name #>( <#= BaseTypeName #> value )
         {
+<# /* Empty String */ #>
+<# if( requireNonEmptyString ) { #>
+            if( value.Trim().Length == 0 )
+            {
+                throw new ArgumentException( $"(<#= Name #>) : value is empty string" );
+            }
+            <#= ValueName #> = value;
+<# } else if( requireEmptyString ) { #>
+            <#= ValueName #> = value.Trim().Length == 0 ? string.Empty : value;
 <# /* Non-Negative */ #>
-<# if( requireNonNegative ) { #>
+<# } else if( requireNonNegative ) { #>
             if( value < 0 )
             {
                 throw new ArgumentException( $"(<#= Name #>) : value is negative {value}" );

@@ -3,6 +3,5 @@ using System;
 
 namespace ValueObjectGenerator
 {
-    internal class ValueNonNegativeAttribute : Attribute
-    {}
+    internal class ValueNonEmptyStringAttribute : Attribute {}
 }
