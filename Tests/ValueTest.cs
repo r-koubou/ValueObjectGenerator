@@ -29,6 +29,10 @@ namespace Tests
     [ValueObject( typeof(int), Option = ValueOption.NonValidating )]
     public partial struct StructValue {}
 
+    [ValueObject( typeof(int))]
+    [NonNegative]
+    public partial struct NonNegativeValue {}
+
     public class ValueTest
     {
         [Test]
@@ -79,6 +83,13 @@ namespace Tests
             Assert.IsFalse( var1 == new StructValue( v + 1 )  );
             Assert.AreEqual( var1, new StructValue( v ) );
             Assert.AreNotEqual( var1, null );
+        }
+
+        [Test]
+        public void CannotAssignNegativeTest()
+        {
+            Assert.DoesNotThrow( () => _ = new NonNegativeValue( 0 ) );
+            Assert.Throws<ArgumentException>( () => _ = new NonNegativeValue( -1 ) );
         }
 
     }

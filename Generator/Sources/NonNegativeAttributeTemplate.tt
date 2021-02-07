@@ -1,0 +1,10 @@
+<#@ template language="C#" visibility="internal" linePragmas="false" #>
+using System;
+
+namespace ValueObjectGenerator
+{
+    internal class NonNegativeAttribute : Attribute
+    {
+        public NonNegativeAttribute() {}
+    }
+}

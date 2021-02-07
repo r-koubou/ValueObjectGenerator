@@ -36,9 +36,13 @@
           <Generator>TextTemplatingFilePreprocessor</Generator>
           <LastGenOutput>ValueObjectAttributeTemplate.cs</LastGenOutput>
         </None>
-        <None Update="Sources\ValueRangeAttributeTemplate.tt">
+        <None Update="Sources\RangeAttributeTemplate.tt">
           <Generator>TextTemplatingFilePreprocessor</Generator>
-          <LastGenOutput>ValueRangeAttributeTemplate.cs</LastGenOutput>
+          <LastGenOutput>RangeAttributeTemplate.cs</LastGenOutput>
+        </None>
+        <None Update="Sources\NonNegativeAttributeTemplate.tt">
+          <Generator>TextTemplatingFilePreprocessor</Generator>
+          <LastGenOutput>NonNegativeAttributeTemplate.cs</LastGenOutput>
         </None>
     </ItemGroup>
 
@@ -59,15 +63,20 @@
       <Compile Update="Sources\ValueObjectAttributeTemplate.cs">
         <DependentUpon>ValueObjectAttributeTemplate.tt</DependentUpon>
       </Compile>
-      <Compile Update="Sources\ValueRangeAttributeTemplate.cs">
-        <DependentUpon>ValueRangeAttributeTemplate.tt</DependentUpon>
+      <Compile Update="Sources\RangeAttributeTemplate.cs">
+        <DependentUpon>RangeAttributeTemplate.tt</DependentUpon>
+      </Compile>
+      <Compile Update="Sources\NonNegativeAttributeTemplate.cs">
+        <AutoGen>True</AutoGen>
+        <DesignTime>True</DesignTime>
+        <DependentUpon>NonNegativeAttributeTemplate.tt</DependentUpon>
       </Compile>
     </ItemGroup>
 
     <ItemGroup>
         <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
         <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.8.0" PrivateAssets="all" />
-        <PackageReference Include="SGFramework" Version="1.0.1" />
+        <PackageReference Include="SGFramework" Version="1.0.2" />
         <PackageReference Include="System.CodeDom" Version="5.0.0" />
     </ItemGroup>
 

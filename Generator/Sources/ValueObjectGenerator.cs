@@ -12,7 +12,8 @@ namespace ValueObjectGenerator
     internal class ValueObjectGenerator : SourceGenerator<TypeDeclarationSyntaxReceiver>, IAttributeContainsChecker
     {
         private static readonly AttributeTypeName ValueObjectAttributeTypeName = new ( "ValueObject" );
-        private static readonly AttributeTypeName ValueRangeAttributeTypeName = new ( "ValueRange" );
+        private static readonly AttributeTypeName RangeAttributeTypeName = new ( "Range" );
+        private static readonly AttributeTypeName NonNegativeAttributeTypeName = new ( "NonNegative" );
 
         public override TypeDeclarationSyntaxReceiver CreateSyntaxReceiver()
             => new( this );
@@ -20,17 +21,20 @@ namespace ValueObjectGenerator
         public override void SetupAttributeArgumentParser( Dictionary<AttributeTypeName, IAttributeArgumentParser> map )
         {
             map[ ValueObjectAttributeTypeName ] = new ValueObjectAttributeArgumentParser();
-            map[ ValueRangeAttributeTypeName ]  = new ValueRangeAttributeArgumentParser();
+            map[ RangeAttributeTypeName ]       = new RangeAttributeArgumentParser();
+            map[ NonNegativeAttributeTypeName ] = new EmptyAttributeArgumentParser();
         }
 
         public bool ContainsAttribute( AttributeTypeName attributeTypeName ) =>
             attributeTypeName == ValueObjectAttributeTypeName ||
-            attributeTypeName == ValueRangeAttributeTypeName;
+            attributeTypeName == RangeAttributeTypeName ||
+            attributeTypeName == NonNegativeAttributeTypeName;
 
         public override void GenerateAttributeCode( GeneratorExecutionContext context )
         {
             context.AddSource( ValueObjectAttributeTypeName.Value, new ValueObjectAttributeTemplate().TransformText() );
-            context.AddSource( ValueRangeAttributeTypeName.Value, new ValueRangeAttributeTemplate().TransformText() );
+            context.AddSource( RangeAttributeTypeName.Value,       new RangeAttributeTemplate().TransformText() );
+            context.AddSource( NonNegativeAttributeTypeName.Value, new NonNegativeAttributeTemplate().TransformText() );
         }
 
         protected override string GenerateCode(
@@ -46,10 +50,15 @@ namespace ValueObjectGenerator
                 // "ValueObject" is Require attribute
                 return string.Empty;
             }
-            if( !attributeTypeList.TryGetValue( ValueRangeAttributeTypeName, out var valueRangeAttributeParams ))
+            if( !attributeTypeList.TryGetValue( RangeAttributeTypeName, out var rangeAttributeParams ))
             {
                 // "ValueObject" is NOT Require attribute
-                valueRangeAttributeParams = null!;
+                rangeAttributeParams = null!;
+            }
+            if( !attributeTypeList.TryGetValue( NonNegativeAttributeTypeName, out var nonNegativeAttributeParams ))
+            {
+                // "ValueObject" is NOT Require attribute
+                nonNegativeAttributeParams = null!;
             }
             #endregion
 
@@ -69,16 +78,16 @@ namespace ValueObjectGenerator
             }
             #endregion
 
-            #region ValueRangeAttribute
+            #region RangeAttribute
             object minValue = string.Empty;
             object maxValue = string.Empty;
-            if( valueRangeAttributeParams != null! )
+            if( rangeAttributeParams != null! )
             {
-                if( !valueRangeAttributeParams.TryGetValue( AttributeParameterNames.Min, out minValue ) )
+                if( !rangeAttributeParams.TryGetValue( AttributeParameterNames.Min, out minValue ) )
                 {
                     minValue = string.Empty;
                 }
-                if( !valueRangeAttributeParams.TryGetValue( AttributeParameterNames.Max, out maxValue ) )
+                if( !rangeAttributeParams.TryGetValue( AttributeParameterNames.Max, out maxValue ) )
                 {
                     maxValue = string.Empty;
                 }
@@ -95,7 +104,8 @@ namespace ValueObjectGenerator
                 ValueName    = valueName.ToString(),
                 ValueOption  = (ValueOption)valueOption,
                 Min          = minValue.ToString(),
-                Max          = maxValue.ToString()
+                Max          = maxValue.ToString(),
+                NonNegative  = nonNegativeAttributeParams != null
             };
 
             var code = template.TransformText();

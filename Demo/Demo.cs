@@ -25,10 +25,16 @@ namespace Demo
     public partial class SampleObject
     {}
 
+    [ValueObject( typeof(int))]
+    // NonNegative: Cannot assign a negative number
+    [NonNegative]
+    public partial class NonNegativeValue
+    {}
+
     // Explicitly set the name of the value variable
-    [ValueObject(typeof(int), ValueName ="Point")]
+    [ValueObject( typeof(int), ValueName = "Point" )]
     // Set an explicit range of values
-    [ValueRange(0, 9999)]
+    [Range( 0, 9999 )]
     public partial class Hp
     {}
 

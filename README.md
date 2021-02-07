@@ -117,7 +117,7 @@ public partial class Hp : IEquatable<Hp>
 ```c#
 [ValueObject(typeof(int))]
 // Set an explicit range of values
-[ValueRange(0, 9999)]
+[Range(0, 9999)]
 public partial class Count
 {}
 ```
@@ -144,9 +144,40 @@ public partial class Count : IEquatable<Count>
 
 
 
+## Limit values by non-negative
+
+```c#
+[ValueObject(typeof(int))]
+[NonNegative]
+public partial class Count
+{}
+```
+
+to
+
+```c#
+public partial class Count : IEquatable<Count>
+{
+    public int Value { get; }
+
+    public Count( int value )
+    {
+        if( value < 0 )
+        {
+            throw new ArgumentException( $"value is negative : {value}" );
+        }
+        Value = value;
+    }
+  :
+  :
+}
+```
+
+
+
 ## Option
 
-if set an`OptionFlags` value, Generate code according to the flag value
+if set an`OptionFlags` value to ValueObjectAttribute, Generate code according to the flag value
 
 - NonValidation
 
