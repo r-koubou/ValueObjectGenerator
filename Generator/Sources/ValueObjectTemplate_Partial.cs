@@ -11,5 +11,6 @@ namespace ValueObjectGenerator
         internal ValueOption ValueOption { get; set; } = ValueOption.None;
         internal string Min { get; set; } = string.Empty;
         internal string Max { get; set; } = string.Empty;
+        internal bool NonNegative { get; set; } = false;
     }
 }

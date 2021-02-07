@@ -32,8 +32,12 @@ namespace ValueObjectGenerator
         declarationType = "struct";
     }
 
+    var requireNonNegative = NonNegative;
     var requireMinMax = !string.IsNullOrEmpty( Min ) && !string.IsNullOrEmpty( Max );
-    var requireValidateMethod = !requireMinMax && !ValueOption.HasFlag( ValueOption.NonValidating );
+    var requireValidateMethod =
+        !requireNonNegative &&
+        !requireMinMax &&
+        !ValueOption.HasFlag( ValueOption.NonValidating );
 
 
 
@@ -94,11 +98,30 @@ namespace ValueObjectGenerator
             #line default
             #line hidden
             this.Write(" value )\n        {\n");
+ /* Non-Negative */
+
+            #line default
+            #line hidden
+ if( requireNonNegative ) {
+
+            #line default
+            #line hidden
+            this.Write("            if( value < 0 )\n            {\n                throw new ArgumentException( $\"(");
+            this.Write(this.ToStringHelper.ToStringWithCulture(Name));
+
+            #line default
+            #line hidden
+            this.Write(") : value is negative {value}\" );\n            }\n            ");
+            this.Write(this.ToStringHelper.ToStringWithCulture(ValueName));
+
+            #line default
+            #line hidden
+            this.Write(" = value;\n");
  /* Min, Max */
 
             #line default
             #line hidden
- if( requireMinMax ) {
+ } else if( requireMinMax ) {
 
             #line default
             #line hidden

@@ -7,7 +7,7 @@ using SGFramework;
 
 namespace ValueObjectGenerator
 {
-    internal class ValueRangeAttributeArgumentParser : IAttributeArgumentParser
+    internal class RangeAttributeArgumentParser : IAttributeArgumentParser
     {
         public void ParseAttributeArgument(
             int argumentIndex,
