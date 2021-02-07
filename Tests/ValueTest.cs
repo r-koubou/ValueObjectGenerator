@@ -26,6 +26,9 @@ namespace Tests
         }
     }
 
+    [ValueObject( typeof(int), Option = ValueOption.NonValidating )]
+    public partial struct StructValue {}
+
     public class ValueTest
     {
         [Test]
@@ -64,5 +67,20 @@ namespace Tests
             Assert.Catch<ArgumentException>( () => _ = new ValidatedString( "" ) );
             Assert.Catch<ArgumentException>( () => _ = new ValidatedString( null! ) );
         }
+
+        [Test]
+        [TestCase( 0 )]
+        [TestCase( 10 )]
+        [TestCase( 100 )]
+        public void StructSameValueTest( int v )
+        {
+            var var1 = new StructValue( v );
+            Assert.IsTrue( var1 == new StructValue( v )  );
+            Assert.IsFalse( var1 == new StructValue( v + 1 )  );
+            Assert.AreEqual( var1, new StructValue( v ) );
+            Assert.AreNotEqual( var1, null );
+        }
+
     }
+
 }

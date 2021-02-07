@@ -13,7 +13,7 @@ namespace ValueObjectGenerator
         ToString = 1 << 3,
     }
 
-    [AttributeUsage( AttributeTargets.Class, AllowMultiple = false )]
+    [AttributeUsage( AttributeTargets.Class | AttributeTargets.Struct, AllowMultiple = false )]
     internal class ValueObjectAttribute : Attribute
     {
         public Type Type { get; }

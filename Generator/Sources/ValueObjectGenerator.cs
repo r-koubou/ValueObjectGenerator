@@ -88,6 +88,8 @@ namespace ValueObjectGenerator
             var template = new ValueObjectTemplate()
             {
                 Namespace    = nameSpace,
+                IsClass      = declaration is ClassDeclarationSyntax,
+                IsStruct     = declaration is StructDeclarationSyntax,
                 Name         = typeName,
                 BaseTypeName = (string)baseName,
                 ValueName    = valueName.ToString(),
