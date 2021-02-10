@@ -7,8 +7,9 @@ namespace ValueObjectGenerator
     {
         None = 0,
         NonValidating = 1 << 0,
-        Implicit = 1 << 1,
-        Comparable = 1 << 2,
-        ToString = 1 << 3,
+        Explicit = 1 << 1,
+        Implicit = 1 << 2,
+        Comparable = 1 << 3,
+        ToString = 1 << 4,
     }
 }

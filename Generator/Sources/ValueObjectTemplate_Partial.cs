@@ -1,18 +1,19 @@
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+
 namespace ValueObjectGenerator
 {
     internal partial class ValueObjectTemplate
     {
         internal string Namespace { get; set; } = string.Empty;
-        internal bool IsClass { get; set; } = false;
-        internal bool IsStruct { get; set; } = false;
+        internal TypeDeclarationSyntax DeclarationSyntax { get; set; } = null!;
         internal string Name { get; set; } = string.Empty;
         internal string BaseTypeName { get; set; } = string.Empty;
         internal string ValueName { get; set; } = string.Empty;
         internal ValueOption ValueOption { get; set; } = ValueOption.None;
         internal string Min { get; set; } = string.Empty;
         internal string Max { get; set; } = string.Empty;
-        internal bool NonNegative { get; set; } = false;
-        internal bool EmptyString { get; set; } = false;
-        internal bool NonEmptyString { get; set; } = false;
+        internal bool NotNegative { get; set; } = false;
+        internal bool AllowEmpty { get; set; } = false;
+        internal bool NotEmpty { get; set; } = false;
     }
 }

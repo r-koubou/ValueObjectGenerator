@@ -5,7 +5,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 using SGFramework;
 
-namespace ValueObjectGenerator
+namespace ValueObjectGenerator.ExtAttributes.Number
 {
     internal class RangeAttributeArgumentParser : IAttributeArgumentParser
     {

@@ -3,5 +3,5 @@ using System;
 
 namespace ValueObjectGenerator
 {
-    internal class ValueNonEmptyStringAttribute : Attribute {}
+    internal class NotEmptyAttribute : Attribute {}
 }
