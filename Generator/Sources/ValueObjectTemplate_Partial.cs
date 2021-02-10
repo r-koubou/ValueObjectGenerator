@@ -13,7 +13,7 @@ namespace ValueObjectGenerator
         internal string Min { get; set; } = string.Empty;
         internal string Max { get; set; } = string.Empty;
         internal bool NotNegative { get; set; } = false;
-        internal bool AllowEmpty { get; set; } = false;
+        internal bool AllowEmptyString { get; set; } = false;
         internal bool NotEmpty { get; set; } = false;
     }
 }

@@ -34,13 +34,13 @@ namespace ValueObjectGenerator
     var declarationType = DeclarationSyntax.Keyword;
 
     var requireNotEmpty = NotEmpty;
-    var requireEmpty = AllowEmpty;
+    var requireStringEmpty = AllowEmptyString;
     var requireNonNegative = NotNegative;
     var requireMinMax = !string.IsNullOrEmpty( Min ) && !string.IsNullOrEmpty( Max );
     var requireValidateMethod =
         !ValueOption.HasFlag( ValueOption.NonValidating ) &&
         !requireNotEmpty &&
-        !requireEmpty &&
+        !requireStringEmpty &&
         !requireNonNegative &&
         !requireMinMax;
 
@@ -157,7 +157,7 @@ namespace ValueObjectGenerator
             this.Write(" = value;\n");
             
             #line 47 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
- } else if( requireEmpty ) { 
+ } else if( requireStringEmpty ) { 
             
             #line default
             #line hidden
@@ -168,7 +168,7 @@ namespace ValueObjectGenerator
             
             #line default
             #line hidden
-            this.Write(" = value.Any() ? value : string.Empty;\n");
+            this.Write(" = string.IsNullOrEmpty( value ) ? string.Empty : value;\n");
             
             #line 49 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
  /* Non-Negative */ 

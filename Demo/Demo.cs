@@ -5,7 +5,7 @@ using ValueObjectGenerator;
 namespace Demo
 {
     // struct version
-    [ValueObject( typeof(int) )]
+    [ValueObject( typeof(int), Option = ValueOption.Explicit)]
     public partial struct Sample
     {
         // By default, the Validate method is implemented and the value is checked in the constructor
@@ -44,7 +44,7 @@ namespace Demo
     }
 
     [ValueObject( typeof(string) )]
-    [AllowEmpty]
+    [AllowEmptyString]
     public partial class AllowEmptyString {}
 
     [ValueObject( typeof(string) )]

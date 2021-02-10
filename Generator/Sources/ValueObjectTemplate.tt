@@ -13,13 +13,13 @@ using System.Linq;
     var declarationType = DeclarationSyntax.Keyword;
 
     var requireNotEmpty = NotEmpty;
-    var requireEmpty = AllowEmpty;
+    var requireStringEmpty = AllowEmptyString;
     var requireNonNegative = NotNegative;
     var requireMinMax = !string.IsNullOrEmpty( Min ) && !string.IsNullOrEmpty( Max );
     var requireValidateMethod =
         !ValueOption.HasFlag( ValueOption.NonValidating ) &&
         !requireNotEmpty &&
-        !requireEmpty &&
+        !requireStringEmpty &&
         !requireNonNegative &&
         !requireMinMax;
 
@@ -44,8 +44,8 @@ namespace <#= Namespace #>
                 throw new ArgumentException( $"(<#= Name #>) : value is empty" );
             }
             <#= ValueName #> = value;
-<# } else if( requireEmpty ) { #>
-            <#= ValueName #> = value.Any() ? value : string.Empty;
+<# } else if( requireStringEmpty ) { #>
+            <#= ValueName #> = string.IsNullOrEmpty( value ) ? string.Empty : value;
 <# /* Non-Negative */ #>
 <# } else if( requireNonNegative ) { #>
             if( value < 0 )

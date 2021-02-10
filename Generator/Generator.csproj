@@ -60,13 +60,13 @@
           <Generator>TextTemplatingFilePreprocessor</Generator>
           <LastGenOutput>ValueRangeAttributeTemplate.cs</LastGenOutput>
         </None>
-        <None Update="Sources\ExtAttributes\AllowEmptyAttributeTemplate.tt">
-          <Generator>TextTemplatingFilePreprocessor</Generator>
-          <LastGenOutput>AllowEmptyAttributeTemplate.cs</LastGenOutput>
-        </None>
         <None Update="Sources\ExtAttributes\NotEmptyAttributeTemplate.tt">
           <Generator>TextTemplatingFilePreprocessor</Generator>
           <LastGenOutput>NotEmptyAttributeTemplate.cs</LastGenOutput>
+        </None>
+        <None Update="Sources\ExtAttributes\String\AllowEmptyStringAttributeTemplate.tt">
+          <Generator>TextTemplatingFilePreprocessor</Generator>
+          <LastGenOutput>AllowEmptyStringAttributeTemplate.cs</LastGenOutput>
         </None>
     </ItemGroup>
 
@@ -108,11 +108,11 @@
       <Compile Update="Sources\ExtAttributes\Number\ValueRangeAttributeTemplate.cs">
         <DependentUpon>ValueRangeAttributeTemplate.tt</DependentUpon>
       </Compile>
-      <Compile Update="Sources\ExtAttributes\AllowEmptyAttributeTemplate.cs">
-        <DependentUpon>AllowEmptyAttributeTemplate.tt</DependentUpon>
-      </Compile>
       <Compile Update="Sources\ExtAttributes\NotEmptyAttributeTemplate.cs">
         <DependentUpon>NotEmptyAttributeTemplate.tt</DependentUpon>
+      </Compile>
+      <Compile Update="Sources\ExtAttributes\String\AllowEmptyStringAttributeTemplate.cs">
+        <DependentUpon>AllowEmptyStringAttributeTemplate.tt</DependentUpon>
       </Compile>
     </ItemGroup>
 

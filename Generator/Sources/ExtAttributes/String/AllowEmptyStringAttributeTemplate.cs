@@ -7,7 +7,7 @@
 //     the code is regenerated.
 // </auto-generated>
 // ------------------------------------------------------------------------------
-namespace ValueObjectGenerator.ExtAttributes
+namespace ValueObjectGenerator.ExtAttributes.String
 {
     using System;
     
@@ -15,9 +15,9 @@ namespace ValueObjectGenerator.ExtAttributes
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ExtAttributes/AllowEmptyAttributeTemplate.tt"
+    #line 1 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ExtAttributes/String/AllowEmptyStringAttributeTemplate.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "16.0.0.0")]
-    internal partial class AllowEmptyAttributeTemplate : AllowEmptyAttributeTemplateBase
+    internal partial class AllowEmptyStringAttributeTemplate : AllowEmptyStringAttributeTemplateBase
     {
 #line hidden
         /// <summary>
@@ -25,7 +25,7 @@ namespace ValueObjectGenerator.ExtAttributes
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("using System;\n\nnamespace ValueObjectGenerator\n{\n    internal class AllowEmptyAttribute : Attribute {}\n}\n");
+            this.Write("using System;\n\nnamespace ValueObjectGenerator\n{\n    internal class AllowEmptyStringAttribute : Attribute {}\n}\n");
             return this.GenerationEnvironment.ToString();
         }
     }
@@ -37,7 +37,7 @@ namespace ValueObjectGenerator.ExtAttributes
     /// Base class for this transformation
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "16.0.0.0")]
-    internal class AllowEmptyAttributeTemplateBase
+    internal class AllowEmptyStringAttributeTemplateBase
     {
         #region Fields
         private global::System.Text.StringBuilder generationEnvironmentField;

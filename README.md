@@ -13,7 +13,7 @@ Simple value objects can be created.
 ## Example
 
 ```c#
-[ValueOf(typeof(int))]
+[ValueObject(typeof(int))]
 public partial class Sample // 'struct' also supporting
 {
     // By default, the Validate method is implemented and the value is checked in the constructor
@@ -43,7 +43,7 @@ public partial struct Sample : IEquatable<Sample>
     //
     public override string ToString()
     {
-        return Value.ToString();
+        return Value.ToString() ?? "";
     }
 
     //----------------------------------------------------------------------
@@ -72,36 +72,36 @@ public partial struct Sample : IEquatable<Sample>
     {
         return !( a == b );
     }
-
-    //----------------------------------------------------------------------
-    // Explicit
-    //----------------------------------------------------------------------
-    public static explicit operator int( Sample x )
-    {
-        return x.Value;
-    }
-
-    public static implicit operator Sample( int value )
-    {
-        return new Sample( value );
-    }
 }
 ```
 
 
 
-## Set your Variable name
+------
 
-A `ValueName` parameter will set your variable name
+
+
+## ValueObject Attribute
+
+`[ValueObject <type>, [ValueName], [Option] ]`
+
+### Type (*Required)
+
+Type of value. use typeof syntax.
+
+### ValiableName
+
+Applied to variable name (default: "Value")
+
+e.g.
 
 ```c#
 // Explicitly set the name of the value variable
 [ValueObject(typeof(int), ValueName ="Point")]
-public partial class Hp
-{}
+public partial class Hp {}
 ```
 
-to
+will be generated to following
 
 ```c#
 public partial class Hp : IEquatable<Hp>
@@ -112,7 +112,88 @@ public partial class Hp : IEquatable<Hp>
 
 
 
-## Limit values by range setting
+### Option
+
+Flags to specify additional value specifications.
+
+if set an`OptionFlags` value to ValueObjectAttribute, Generate code according to the flag value
+
+- NonValidation
+
+    - Don't validate in constructor
+
+- Implicit / Explicit
+
+    - Add  implicit / explicit operator
+
+- Comparable
+
+  - Add  IComparable\<T\> implementation
+
+
+
+
+### NonValidation
+
+
+```c#
+[ValueObject( typeof(int), Option = ValueOption.NonValidating)]
+public partial class Sample {}
+```
+
+### Explicit
+
+```c#
+[ValueObject( typeof(int), ValueOption.Explicit )]
+public partial class Sample {}
+```
+
+will be generated to following
+
+```c#
+public static explicit operator int( Sample x )
+{
+    return x.Value;
+}
+
+public static implicit operator Sample( int value )
+{
+    return new Sample( value );
+}
+```
+
+### Implicit
+
+```c#
+[ValueObject( typeof(int), ValueOption.Implicit )]
+public partial class Sample {}
+```
+
+will be generated to following
+
+```c#
+public static implicit operator int( Sample x )
+{
+    return x.Value;
+}
+
+public static implicit operator Sample( int value )
+{
+    return new Sample( value );
+}
+```
+
+
+
+------
+
+
+
+## Available other attribute
+
+Provides presets for validation. In many cases, it is exclusive to the Validate method.
+
+### Limit values by range setting
 
 ```c#
 [ValueObject(typeof(int))]
@@ -122,7 +203,7 @@ public partial class Count
 {}
 ```
 
-to
+will be generated to following
 
 ```c#
 public partial class Count : IEquatable<Count>
@@ -144,16 +225,15 @@ public partial class Count : IEquatable<Count>
 
 
 
-## Limit values by non-negative
+### Limit values by non-negative
 
 ```c#
 [ValueObject(typeof(int))]
-[ValueNonNegative]
-public partial class Count
-{}
+[NotNegative]
+public partial class Count {}
 ```
 
-to
+will be generated to following
 
 ```c#
 public partial class Count : IEquatable<Count>
@@ -175,60 +255,58 @@ public partial class Count : IEquatable<Count>
 
 
 
-## Option
-
-if set an`OptionFlags` value to ValueObjectAttribute, Generate code according to the flag value
-
-- NonValidation
-
-    - Don't validate in constructor
-
-- Implicit
-
-    - Add  implicit operato
-
-- Comparable
-
-  - Add  IComparable\<T\> implementation
-
-
-
-
-### NonValidation
-
+### Allow empty string
 
 ```c#
-[ValueObject( typeof(int), Option = ValueOption.NonValidating)]
-public partial class Sample
-{}
+[ValueObject(typeof(string))]
+[AllowEmptyString]
+public partial class Name {}
 ```
 
-
-
-### Implicit
+will be generated to following
 
 ```c#
-[ValueObject( typeof(int), ValueOption.Implicit )]
-public partial class Sample{}
-```
-
-Implicit operators will be added in place of explicit operators.
-
-```c#
-public static implicit operator int( Sample x )
+public partial class Name : IEquatable<Count>
 {
-    return x.Value;
-}
+    public string Value { get; }
 
-public static implicit operator Sample( int value )
-{
-    return new Sample( value );
+    public AllowEmptyString( string value )
+    {
+        Value = string.IsNullOrEmpty( value ) ? string.Empty : value;
+    }
+  :
+  :
 }
 ```
 
-Implicit type conversion enables code writing like the following
+
+
+### Deny empty
+
+NOTE: Require Linq
 
 ```c#
-Sample sample = 1; // new Sample( 1 );
-int value = sample; // Sample.Value
+[ValueObject(typeof(string))]
+[NotEmpty]
+public partial class Name {}
+```
+
+will be generated to following
+
+```c#
+public partial class Name : IEquatable<Count>
+{
+    public string Value { get; }
+
+    public AllowEmptyString( string value )
+    {
+        if( !value.Any() )
+        {
+            throw new ArgumentException( $"(Name) : value is empty" );
+        }
+        Value = value;
+    }
+  :
+  :
+}
 ```
