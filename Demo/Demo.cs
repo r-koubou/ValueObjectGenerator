@@ -8,51 +8,43 @@ namespace Demo
     [ValueObject( typeof(int) )]
     public partial struct Sample
     {
-        // By default, the Validate method is implemented and the value is checked in the constructor
+        // By default, the Validate method is defined and called from constructor
+        // If ValueOption.NonValidating is set, Validate method will not be defined
         private static partial int Validate( int value )
         {
             if( value < 0 )
             {
                 throw new ArgumentException( "value must be than 0" );
             }
+
             // The returned value will be assigned to the value member
             return value;
         }
     }
 
     // class version
-    [ValueObject( typeof(int), Option = ValueOption.NonValidating)]
-    public partial class SampleObject
-    {}
+    [ValueObject( typeof(int), Option = ValueOption.NonValidating )]
+    public partial class SampleObject {}
 
-    [ValueObject( typeof(int))]
+    [ValueObject( typeof(int) )]
     // NonNegative: Cannot assign a negative number
-    [ValueNonNegative]
-    public partial class NonNegativeValue
-    {}
+    [NotNegative]
+    public partial class NonNegativeValue {}
 
     // Explicitly set the name of the value variable
     [ValueObject( typeof(int), ValueName = "Point" )]
     // Set an explicit range of values
     [ValueRange( 0, 9999 )]
-    public partial class Hp
-    {}
+    public partial class Hp {}
 
     // Explicit implementation of the ToString method
-    [ValueObject(typeof(Guid), Option = ValueOption.NonValidating | ValueOption.ToString)]
+    [ValueObject( typeof(Guid), Option = ValueOption.NonValidating | ValueOption.ToString )]
     public partial class MyGuid
     {
-        private partial string ToStringImpl()
-            => Value.ToString( "D" );
+        private partial string ToStringImpl() => Value.ToString( "D" );
     }
 
-    [ValueObject(typeof(string))]
-    [ValueEmptyString]
-    public partial class AllowEmptyString
-    {}
-
-    [ValueObject( typeof(string))]
-    [ValueNonEmptyString]
-    public partial class NotAllowEmptyString
-    {}
+    [ValueObject( typeof(string) )]
+    [NotEmpty]
+    public partial class NotAllowEmptyString {}
 }

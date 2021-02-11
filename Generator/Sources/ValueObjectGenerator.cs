@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 using Microsoft.CodeAnalysis;
@@ -6,43 +7,41 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using SGFramework;
 using SGFramework.TypeDeclaration;
 
+using ValueObjectGenerator.ExtAttributes;
+using ValueObjectGenerator.ExtAttributes.Number;
+
 namespace ValueObjectGenerator
 {
     [Generator]
     internal class ValueObjectGenerator : SourceGenerator<TypeDeclarationSyntaxReceiver>, IAttributeContainsChecker
     {
-        private static readonly AttributeTypeName ValueObjectAttributeTypeName = new ( "ValueObject" );
-        private static readonly AttributeTypeName RangeAttributeTypeName = new ( "ValueRange" );
-        private static readonly AttributeTypeName NonNegativeAttributeTypeName = new ( "ValueNonNegative" );
-        private static readonly AttributeTypeName EmptyStringAttributeTypeName = new ( "ValueEmptyString" );
-        private static readonly AttributeTypeName NonEmptyStringAttributeTypeName = new ( "ValueNonEmptyString" );
+        private static readonly AttributeTypeName ValueObjectAttributeTypeName = new( "ValueObject" );
+        private static readonly AttributeTypeName RangeAttributeTypeName = new( "ValueRange" );
+        private static readonly AttributeTypeName NotNegativeAttributeTypeName = new( "NotNegative" );
+        private static readonly AttributeTypeName NotEmptyAttributeTypeName = new( "NotEmpty" );
 
-        public override TypeDeclarationSyntaxReceiver CreateSyntaxReceiver()
-            => new( this );
+        public override TypeDeclarationSyntaxReceiver CreateSyntaxReceiver() => new( this );
 
         public override void SetupAttributeArgumentParser( Dictionary<AttributeTypeName, IAttributeArgumentParser> map )
         {
-            map[ ValueObjectAttributeTypeName ]    = new ValueObjectAttributeArgumentParser();
-            map[ RangeAttributeTypeName ]          = new RangeAttributeArgumentParser();
-            map[ NonNegativeAttributeTypeName ]    = new EmptyAttributeArgumentParser();
-            map[ EmptyStringAttributeTypeName ]    = new EmptyAttributeArgumentParser();
-            map[ NonEmptyStringAttributeTypeName ] = new EmptyAttributeArgumentParser();
+            map[ ValueObjectAttributeTypeName ] = new ValueObjectAttributeArgumentParser();
+            map[ RangeAttributeTypeName ]       = new RangeAttributeArgumentParser();
+            map[ NotNegativeAttributeTypeName ] = new EmptyAttributeArgumentParser();
+            map[ NotEmptyAttributeTypeName ]    = new NotEmptyAttributeArgumentParser();
         }
 
         public bool ContainsAttribute( AttributeTypeName attributeTypeName ) =>
             attributeTypeName == ValueObjectAttributeTypeName ||
             attributeTypeName == RangeAttributeTypeName ||
-            attributeTypeName == NonNegativeAttributeTypeName ||
-            attributeTypeName == EmptyStringAttributeTypeName ||
-            attributeTypeName == NonEmptyStringAttributeTypeName;
+            attributeTypeName == NotNegativeAttributeTypeName ||
+            attributeTypeName == NotEmptyAttributeTypeName;
 
         public override void GenerateAttributeCode( GeneratorExecutionContext context )
         {
-            context.AddSource( ValueObjectAttributeTypeName.Value, new ValueObjectAttributeTemplate().TransformText() );
-            context.AddSource( RangeAttributeTypeName.Value,       new ValueRangeAttributeTemplate().TransformText() );
-            context.AddSource( NonNegativeAttributeTypeName.Value, new ValueNonNegativeAttributeTemplate().TransformText() );
-            context.AddSource( EmptyStringAttributeTypeName.Value, new ValueEmptyStringAttributeTemplate().TransformText() );
-            context.AddSource( NonEmptyStringAttributeTypeName.Value, new ValueNonEmptyStringAttributeTemplate().TransformText() );
+            context.AddSource( ValueObjectAttributeTypeName.Value,      new ValueObjectAttributeTemplate().TransformText() );
+            context.AddSource( RangeAttributeTypeName.Value,            new ValueRangeAttributeTemplate().TransformText() );
+            context.AddSource( NotNegativeAttributeTypeName.Value,      new NotNegativeAttributeTemplate().TransformText() );
+            context.AddSource( NotEmptyAttributeTypeName.Value,         new NotEmptyAttributeTemplate().TransformText() );
         }
 
         protected override string GenerateCode(
@@ -51,32 +50,29 @@ namespace ValueObjectGenerator
             string typeName,
             IDictionary<AttributeTypeName, IDictionary<AttributeParamName, object>> attributeTypeList )
         {
-
             #region Get Attributes
-            if( !attributeTypeList.TryGetValue( ValueObjectAttributeTypeName, out var valueObjectAttributeParams ))
+            if( !attributeTypeList.TryGetValue( ValueObjectAttributeTypeName, out var valueObjectAttributeParams ) )
             {
                 // "ValueObject" is Require attribute
                 return string.Empty;
             }
-            if( !attributeTypeList.TryGetValue( RangeAttributeTypeName, out var rangeAttributeParams ))
+
+            if( !attributeTypeList.TryGetValue( RangeAttributeTypeName, out var rangeAttributeParams ) )
             {
                 // "ValueObject" is NOT Require attribute
                 rangeAttributeParams = null!;
             }
-            if( !attributeTypeList.TryGetValue( NonNegativeAttributeTypeName, out var nonNegativeAttributeParams ))
+
+            if( !attributeTypeList.TryGetValue( NotNegativeAttributeTypeName, out var notNegativeAttributeParams ) )
             {
                 // "ValueObject" is NOT Require attribute
-                nonNegativeAttributeParams = null!;
+                notNegativeAttributeParams = null!;
             }
-            if( !attributeTypeList.TryGetValue( EmptyStringAttributeTypeName, out var emptyStringAttributeParams ))
+
+            if( !attributeTypeList.TryGetValue( NotEmptyAttributeTypeName, out var notEmptyAttributeParams ) )
             {
                 // "ValueObject" is NOT Require attribute
-                emptyStringAttributeParams = null!;
-            }
-            if( !attributeTypeList.TryGetValue( NonEmptyStringAttributeTypeName, out var nonEmptyStringAttributeParams ))
-            {
-                // "ValueObject" is NOT Require attribute
-                nonEmptyStringAttributeParams = null!;
+                notEmptyAttributeParams = null!;
             }
             #endregion
 
@@ -90,6 +86,7 @@ namespace ValueObjectGenerator
             {
                 valueName = "Value";
             }
+
             if( !valueObjectAttributeParams.TryGetValue( AttributeParameterNames.OptionFlags, out var valueOption ) )
             {
                 valueOption = ValueOption.None;
@@ -99,12 +96,14 @@ namespace ValueObjectGenerator
             #region RangeAttribute
             object minValue = string.Empty;
             object maxValue = string.Empty;
+
             if( rangeAttributeParams != null! )
             {
                 if( !rangeAttributeParams.TryGetValue( AttributeParameterNames.Min, out minValue ) )
                 {
                     minValue = string.Empty;
                 }
+
                 if( !rangeAttributeParams.TryGetValue( AttributeParameterNames.Max, out maxValue ) )
                 {
                     maxValue = string.Empty;
@@ -112,20 +111,31 @@ namespace ValueObjectGenerator
             }
             #endregion
 
-            var template = new ValueObjectTemplate()
+            #region NotEmptyAttribute
+            var excludeWhiteSpace = false;
+
+            if( notEmptyAttributeParams != null )
             {
-                Namespace    = nameSpace,
-                IsClass      = declaration is ClassDeclarationSyntax,
-                IsStruct     = declaration is StructDeclarationSyntax,
-                Name         = typeName,
-                BaseTypeName = (string)baseName,
-                ValueName    = valueName.ToString(),
-                ValueOption  = (ValueOption)valueOption,
-                Min          = minValue.ToString(),
-                Max          = maxValue.ToString(),
-                NonNegative  = nonNegativeAttributeParams != null,
-                EmptyString  = emptyStringAttributeParams != null,
-                NonEmptyString  = nonEmptyStringAttributeParams != null
+                if( notEmptyAttributeParams.TryGetValue( AttributeParameterNames.ExcludeWhiteSpace, out var v ) )
+                {
+                    _ = bool.TryParse( v.ToString(), out excludeWhiteSpace );
+                }
+            }
+            #endregion
+
+            var template = new ValueObjectTemplate
+            {
+                Namespace         = nameSpace,
+                DeclarationSyntax = declaration,
+                Name              = typeName,
+                BaseTypeName      = (string)baseName,
+                ValueName         = valueName.ToString(),
+                ValueOption       = (ValueOption)valueOption,
+                Min               = minValue.ToString(),
+                Max               = maxValue.ToString(),
+                NotNegative       = notNegativeAttributeParams != null,
+                NotEmpty          = notEmptyAttributeParams != null,
+                ExcludeWhiteSpace = excludeWhiteSpace
             };
 
             var code = template.TransformText();

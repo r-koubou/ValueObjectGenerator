@@ -1,0 +1,16 @@
+<#@ template language="C#" visibility="internal" linePragmas="false" #>
+using System;
+
+namespace ValueObjectGenerator
+{
+    [AttributeUsage( AttributeTargets.Class | AttributeTargets.Struct, AllowMultiple = false )]
+    internal class NotEmptyAttribute : Attribute
+    {
+        public bool ExcludeWhiteSpace { get; set; } = false;
+
+        public NotEmptyAttribute( bool whiteSpace = false )
+        {
+            ExcludeWhiteSpace = whiteSpace;
+        }
+    }
+}

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 using NUnit.Framework;
 
@@ -29,13 +30,17 @@ namespace Tests
     [ValueObject( typeof(int), Option = ValueOption.NonValidating )]
     public partial struct StructValue {}
 
-    [ValueObject( typeof(int))]
-    [ValueNonNegative]
+    [ValueObject( typeof(int) )]
+    [NotNegative]
     public partial struct NonNegativeValue {}
 
-    [ValueObject( typeof(string))]
-    [ValueNonEmptyString]
+    [ValueObject( typeof(string) )]
+    [NotEmpty]
     public partial struct NonEmptyValue {}
+
+    [ValueObject( typeof(IList<int>) )]
+    [NotEmpty]
+    public partial class NonEmptyList {}
 
     public class ValueTest
     {
@@ -59,14 +64,12 @@ namespace Tests
         [TestCase( 100 )]
         public void ImplicitCastTest( int v )
         {
-            var implicitObject = new IntImplicitObject( v );
-            int intValue = implicitObject;
-            Assert.AreEqual( v, intValue );
-
-            intValue       = v;
-            implicitObject = intValue;
-            Assert.AreEqual( implicitObject.Value, v );
-
+            var v1 = new IntImplicitObject( 100 );
+            int intValue = v1;
+            Assert.IsTrue( v1 == intValue );
+            Assert.IsTrue( v1.Equals( intValue ) );
+            Assert.AreEqual( v1,      (IntImplicitObject)intValue );
+            Assert.AreEqual( (int)v1, intValue );
         }
 
         [Test]
@@ -101,9 +104,15 @@ namespace Tests
         {
             Assert.DoesNotThrow( () => _              = new NonEmptyValue( "Hello" ) );
             Assert.Throws<ArgumentException>( () => _ = new NonEmptyValue( "" ) );
-            Assert.Throws<ArgumentException>( () => _ = new NonEmptyValue( "     " ) );
+            Assert.Throws<ArgumentException>( () => _ = new NonEmptyValue( string.Empty ) );
         }
 
+        [Test]
+        public void CannotAssignEmptyListTest()
+        {
+            Assert.DoesNotThrow( () => _              = new NonEmptyList( new List<int>{ 0 } ) );
+            Assert.Throws<ArgumentException>( () => _ = new NonEmptyList( new List<int>() ) );
+        }
     }
 
 }

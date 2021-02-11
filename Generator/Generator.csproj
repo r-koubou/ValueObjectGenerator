@@ -36,21 +36,37 @@
           <Generator>TextTemplatingFilePreprocessor</Generator>
           <LastGenOutput>ValueObjectAttributeTemplate.cs</LastGenOutput>
         </None>
-        <None Update="Sources\ValueRangeAttributeTemplate.tt">
+        <None Update="Sources\Attributes\String\AllowEmptyStringAttributeTemplate.tt">
+          <Generator>TextTemplatingFilePreprocessor</Generator>
+          <LastGenOutput>AllowEmptyStringAttributeTemplate.cs</LastGenOutput>
+        </None>
+        <None Update="Sources\Attributes\String\DenyEmptyStringAttributeTemplate.tt">
+          <Generator>TextTemplatingFilePreprocessor</Generator>
+          <LastGenOutput>DenyEmptyStringAttributeTemplate.cs</LastGenOutput>
+        </None>
+        <None Update="Sources\Attributes\Numbers\DenyNegativeAttributeTemplate.tt">
+          <Generator>TextTemplatingFilePreprocessor</Generator>
+          <LastGenOutput>DenyNegativeAttributeTemplate.cs</LastGenOutput>
+        </None>
+        <None Update="Sources\Attributes\Numbers\ValueRangeAttributeTemplate.tt">
           <Generator>TextTemplatingFilePreprocessor</Generator>
           <LastGenOutput>ValueRangeAttributeTemplate.cs</LastGenOutput>
         </None>
-        <None Update="Sources\ValueNonNegativeAttributeTemplate.tt">
+        <None Update="Sources\ExtAttributes\Number\NotNegativeAttributeTemplate.tt">
           <Generator>TextTemplatingFilePreprocessor</Generator>
-          <LastGenOutput>ValueNonNegativeAttributeTemplate.cs</LastGenOutput>
+          <LastGenOutput>NotNegativeAttributeTemplate.cs</LastGenOutput>
         </None>
-        <None Update="Sources\ValueEmptyStringAttributeTemplate.tt">
+        <None Update="Sources\ExtAttributes\Number\ValueRangeAttributeTemplate.tt">
           <Generator>TextTemplatingFilePreprocessor</Generator>
-          <LastGenOutput>ValueEmptyStringAttributeTemplate.cs</LastGenOutput>
+          <LastGenOutput>ValueRangeAttributeTemplate.cs</LastGenOutput>
         </None>
-        <None Update="Sources\ValueNonEmptyStringAttributeTemplate.tt">
+        <None Update="Sources\ExtAttributes\NotEmptyAttributeTemplate.tt">
           <Generator>TextTemplatingFilePreprocessor</Generator>
-          <LastGenOutput>ValueNonEmptyStringAttributeTemplate.cs</LastGenOutput>
+          <LastGenOutput>NotEmptyAttributeTemplate.cs</LastGenOutput>
+        </None>
+        <None Update="Sources\ExtAttributes\String\AllowEmptyStringAttributeTemplate.tt">
+          <Generator>TextTemplatingFilePreprocessor</Generator>
+          <LastGenOutput>AllowEmptyStringAttributeTemplate.cs</LastGenOutput>
         </None>
     </ItemGroup>
 
@@ -71,23 +87,32 @@
       <Compile Update="Sources\ValueObjectAttributeTemplate.cs">
         <DependentUpon>ValueObjectAttributeTemplate.tt</DependentUpon>
       </Compile>
-      <Compile Update="Sources\ValueRangeAttributeTemplate.cs">
+      <Compile Update="Sources\Attributes\String\AllowEmptyStringAttributeTemplate.cs">
+        <AutoGen>True</AutoGen>
+        <DesignTime>True</DesignTime>
+        <DependentUpon>AllowEmptyStringAttributeTemplate.tt</DependentUpon>
+      </Compile>
+      <Compile Update="Sources\Attributes\String\DenyEmptyStringAttributeTemplate.cs">
+        <AutoGen>True</AutoGen>
+        <DesignTime>True</DesignTime>
+        <DependentUpon>DenyEmptyStringAttributeTemplate.tt</DependentUpon>
+      </Compile>
+      <Compile Update="Sources\Attributes\Numbers\DenyNegativeAttributeTemplate.cs">
+        <AutoGen>True</AutoGen>
+        <DesignTime>True</DesignTime>
+        <DependentUpon>DenyNegativeAttributeTemplate.tt</DependentUpon>
+      </Compile>
+      <Compile Update="Sources\ExtAttributes\Number\NotNegativeAttributeTemplate.cs">
+        <DependentUpon>NotNegativeAttributeTemplate.tt</DependentUpon>
+      </Compile>
+      <Compile Update="Sources\ExtAttributes\Number\ValueRangeAttributeTemplate.cs">
         <DependentUpon>ValueRangeAttributeTemplate.tt</DependentUpon>
       </Compile>
-      <Compile Update="Sources\ValueNonNegativeAttributeTemplate.cs">
-        <AutoGen>True</AutoGen>
-        <DesignTime>True</DesignTime>
-        <DependentUpon>ValueNonNegativeAttributeTemplate.tt</DependentUpon>
+      <Compile Update="Sources\ExtAttributes\NotEmptyAttributeTemplate.cs">
+        <DependentUpon>NotEmptyAttributeTemplate.tt</DependentUpon>
       </Compile>
-      <Compile Update="Sources\ValueEmptyStringAttributeTemplate.cs">
-        <AutoGen>True</AutoGen>
-        <DesignTime>True</DesignTime>
-        <DependentUpon>ValueEmptyStringAttributeTemplate.tt</DependentUpon>
-      </Compile>
-      <Compile Update="Sources\ValueNonEmptyStringAttributeTemplate.cs">
-        <AutoGen>True</AutoGen>
-        <DesignTime>True</DesignTime>
-        <DependentUpon>ValueNonEmptyStringAttributeTemplate.tt</DependentUpon>
+      <Compile Update="Sources\ExtAttributes\String\AllowEmptyStringAttributeTemplate.cs">
+        <DependentUpon>AllowEmptyStringAttributeTemplate.tt</DependentUpon>
       </Compile>
     </ItemGroup>
 
