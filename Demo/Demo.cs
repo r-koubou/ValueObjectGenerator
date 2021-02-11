@@ -5,10 +5,11 @@ using ValueObjectGenerator;
 namespace Demo
 {
     // struct version
-    [ValueObject( typeof(int), Option = ValueOption.Explicit)]
+    [ValueObject( typeof(int) )]
     public partial struct Sample
     {
-        // By default, the Validate method is implemented and the value is checked in the constructor
+        // By default, the Validate method is defined and called from constructor
+        // If ValueOption.NonValidating is set, Validate method will not be defined
         private static partial int Validate( int value )
         {
             if( value < 0 )
@@ -42,10 +43,6 @@ namespace Demo
     {
         private partial string ToStringImpl() => Value.ToString( "D" );
     }
-
-    [ValueObject( typeof(string) )]
-    [AllowEmptyString]
-    public partial class AllowEmptyString {}
 
     [ValueObject( typeof(string) )]
     [NotEmpty]

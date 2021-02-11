@@ -13,13 +13,11 @@ using System.Linq;
     var declarationType = DeclarationSyntax.Keyword;
 
     var requireNotEmpty = NotEmpty;
-    var requireStringEmpty = AllowEmptyString;
     var requireNonNegative = NotNegative;
     var requireMinMax = !string.IsNullOrEmpty( Min ) && !string.IsNullOrEmpty( Max );
     var requireValidateMethod =
         !ValueOption.HasFlag( ValueOption.NonValidating ) &&
         !requireNotEmpty &&
-        !requireStringEmpty &&
         !requireNonNegative &&
         !requireMinMax;
 
@@ -37,27 +35,32 @@ namespace <#= Namespace #>
 
         public <#= Name #>( <#= BaseTypeName #> value )
         {
-<# /* Empty String */ #>
+<# /* Non-Empty */ #>
 <# if( requireNotEmpty ) { #>
+<# if( BaseTypeName == "string" ) { #>
+            if( string.IsNullOrEmpty( value )<#= !ExcludeWhiteSpace ? " || value.Trim().Length == 0" : "" #> )
+            {
+                throw new ArgumentException( $"(<#= Name #>) value is empty" );
+            }
+<# } else { #>
             if( !value.Any() )
             {
-                throw new ArgumentException( $"(<#= Name #>) : value is empty" );
+                throw new ArgumentException( $"(<#= Name #>) value is empty" );
             }
+<# } #>
             <#= ValueName #> = value;
-<# } else if( requireStringEmpty ) { #>
-            <#= ValueName #> = string.IsNullOrEmpty( value ) ? string.Empty : value;
 <# /* Non-Negative */ #>
 <# } else if( requireNonNegative ) { #>
             if( value < 0 )
             {
-                throw new ArgumentException( $"(<#= Name #>) : value is negative {value}" );
+                throw new ArgumentException( $"(<#= Name #>) value is negative {value}" );
             }
             <#= ValueName #> = value;
 <# /* Min, Max */ #>
 <# } else if( requireMinMax ) { #>
             if( value < (<#= Min #>) || value > (<#= Max #>) )
             {
-                throw new ArgumentOutOfRangeException( $"<#= Name #> : {value} (range:<#= Min #> < <#= Max #>)" );
+                throw new ArgumentOutOfRangeException( $"<#= Name #> Out of range : {value} (range:<#= Min #> < <#= Max #>)" );
             }
             <#= ValueName #> = value;
 <# /* No Validation */ #>

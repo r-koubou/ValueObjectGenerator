@@ -3,5 +3,14 @@ using System;
 
 namespace ValueObjectGenerator
 {
-    internal class NotEmptyAttribute : Attribute {}
+    [AttributeUsage( AttributeTargets.Class | AttributeTargets.Struct, AllowMultiple = false )]
+    internal class NotEmptyAttribute : Attribute
+    {
+        public bool ExcludeWhiteSpace { get; set; } = false;
+
+        public NotEmptyAttribute( bool whiteSpace = false )
+        {
+            ExcludeWhiteSpace = whiteSpace;
+        }
+    }
 }

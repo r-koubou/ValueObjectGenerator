@@ -25,7 +25,7 @@ namespace ValueObjectGenerator.ExtAttributes
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("using System;\n\nnamespace ValueObjectGenerator\n{\n    internal class NotEmptyAttribute : Attribute {}\n}\n");
+            this.Write("using System;\n\nnamespace ValueObjectGenerator\n{\n    [AttributeUsage( AttributeTargets.Class | AttributeTargets.Struct, AllowMultiple = false )]\n    internal class NotEmptyAttribute : Attribute\n    {\n        public bool ExcludeWhiteSpace { get; set; } = false;\n\n        public NotEmptyAttribute( bool whiteSpace = false )\n        {\n            ExcludeWhiteSpace = whiteSpace;\n        }\n    }\n}\n");
             return this.GenerationEnvironment.ToString();
         }
     }

@@ -34,13 +34,11 @@ namespace ValueObjectGenerator
     var declarationType = DeclarationSyntax.Keyword;
 
     var requireNotEmpty = NotEmpty;
-    var requireStringEmpty = AllowEmptyString;
     var requireNonNegative = NotNegative;
     var requireMinMax = !string.IsNullOrEmpty( Min ) && !string.IsNullOrEmpty( Max );
     var requireValidateMethod =
         !ValueOption.HasFlag( ValueOption.NonValidating ) &&
         !requireNotEmpty &&
-        !requireStringEmpty &&
         !requireNonNegative &&
         !requireMinMax;
 
@@ -52,218 +50,218 @@ namespace ValueObjectGenerator
             #line default
             #line hidden
             
-            #line 30 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 28 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
  if( !string.IsNullOrEmpty( Namespace ) ) { 
             
             #line default
             #line hidden
             this.Write("namespace ");
             
-            #line 31 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 29 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Namespace));
             
             #line default
             #line hidden
             this.Write("\n{\n");
             
-            #line 33 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 31 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
  } 
             
             #line default
             #line hidden
             this.Write("    public partial ");
             
-            #line 34 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 32 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(declarationType));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 34 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 32 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Name));
             
             #line default
             #line hidden
             this.Write(" : IEquatable<");
             
-            #line 34 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 32 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Name));
             
             #line default
             #line hidden
             this.Write(">");
             
-            #line 34 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 32 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ValueOption.HasFlag( ValueOption.Comparable ) ? $", IComparable<{Name}>" : ""));
             
             #line default
             #line hidden
             this.Write("\n    {\n        public ");
             
-            #line 36 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 34 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(BaseTypeName));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 36 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 34 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ValueName));
             
             #line default
             #line hidden
             this.Write(" { get; }\n\n        public ");
             
-            #line 38 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 36 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Name));
             
             #line default
             #line hidden
             this.Write("( ");
             
-            #line 38 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 36 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(BaseTypeName));
             
             #line default
             #line hidden
             this.Write(" value )\n        {\n");
             
-            #line 40 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
- /* Empty String */ 
+            #line 38 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+ /* Non-Empty */ 
             
             #line default
             #line hidden
             
-            #line 41 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 39 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
  if( requireNotEmpty ) { 
+            
+            #line default
+            #line hidden
+            
+            #line 40 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+ if( BaseTypeName == "string" ) { 
+            
+            #line default
+            #line hidden
+            this.Write("            if( string.IsNullOrEmpty( value )");
+            
+            #line 41 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(!ExcludeWhiteSpace ? " || value.Trim().Length == 0" : ""));
+            
+            #line default
+            #line hidden
+            this.Write(" )\n            {\n                throw new ArgumentException( $\"(");
+            
+            #line 43 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Name));
+            
+            #line default
+            #line hidden
+            this.Write(") value is empty\" );\n            }\n");
+            
+            #line 45 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+ } else { 
             
             #line default
             #line hidden
             this.Write("            if( !value.Any() )\n            {\n                throw new ArgumentException( $\"(");
             
-            #line 44 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 48 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Name));
             
             #line default
             #line hidden
-            this.Write(") : value is empty\" );\n            }\n            ");
+            this.Write(") value is empty\" );\n            }\n");
             
-            #line 46 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 50 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+ } 
+            
+            #line default
+            #line hidden
+            this.Write("            ");
+            
+            #line 51 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ValueName));
             
             #line default
             #line hidden
             this.Write(" = value;\n");
             
-            #line 47 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
- } else if( requireStringEmpty ) { 
-            
-            #line default
-            #line hidden
-            this.Write("            ");
-            
-            #line 48 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(ValueName));
-            
-            #line default
-            #line hidden
-            this.Write(" = string.IsNullOrEmpty( value ) ? string.Empty : value;\n");
-            
-            #line 49 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 52 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
  /* Non-Negative */ 
             
             #line default
             #line hidden
             
-            #line 50 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 53 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
  } else if( requireNonNegative ) { 
             
             #line default
             #line hidden
             this.Write("            if( value < 0 )\n            {\n                throw new ArgumentException( $\"(");
             
-            #line 53 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 56 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Name));
             
             #line default
             #line hidden
-            this.Write(") : value is negative {value}\" );\n            }\n            ");
+            this.Write(") value is negative {value}\" );\n            }\n            ");
             
-            #line 55 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 58 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ValueName));
             
             #line default
             #line hidden
             this.Write(" = value;\n");
             
-            #line 56 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 59 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
  /* Min, Max */ 
             
             #line default
             #line hidden
             
-            #line 57 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 60 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
  } else if( requireMinMax ) { 
             
             #line default
             #line hidden
             this.Write("            if( value < (");
             
-            #line 58 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 61 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Min));
             
             #line default
             #line hidden
             this.Write(") || value > (");
             
-            #line 58 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 61 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Max));
             
             #line default
             #line hidden
             this.Write(") )\n            {\n                throw new ArgumentOutOfRangeException( $\"");
             
-            #line 60 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 63 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Name));
             
             #line default
             #line hidden
-            this.Write(" : {value} (range:");
+            this.Write(" Out of range : {value} (range:");
             
-            #line 60 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 63 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Min));
             
             #line default
             #line hidden
             this.Write(" < ");
             
-            #line 60 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 63 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Max));
             
             #line default
             #line hidden
             this.Write(")\" );\n            }\n            ");
-            
-            #line 62 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(ValueName));
-            
-            #line default
-            #line hidden
-            this.Write(" = value;\n");
-            
-            #line 63 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
- /* No Validation */ 
-            
-            #line default
-            #line hidden
-            
-            #line 64 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
- } else if( !requireValidateMethod ) { 
-            
-            #line default
-            #line hidden
-            this.Write("            ");
             
             #line 65 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ValueName));
@@ -273,395 +271,415 @@ namespace ValueObjectGenerator
             this.Write(" = value;\n");
             
             #line 66 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+ /* No Validation */ 
+            
+            #line default
+            #line hidden
+            
+            #line 67 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+ } else if( !requireValidateMethod ) { 
+            
+            #line default
+            #line hidden
+            this.Write("            ");
+            
+            #line 68 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(ValueName));
+            
+            #line default
+            #line hidden
+            this.Write(" = value;\n");
+            
+            #line 69 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
  } else { 
             
             #line default
             #line hidden
             this.Write("            ");
             
-            #line 67 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 70 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ValueName));
             
             #line default
             #line hidden
             this.Write(" = Validate( value );\n");
             
-            #line 68 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 71 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
  } 
             
             #line default
             #line hidden
             this.Write("        }\n\n");
             
-            #line 71 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 74 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
  /* Validate method */ 
             
             #line default
             #line hidden
             
-            #line 72 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 75 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
  if( requireValidateMethod ) { 
             
             #line default
             #line hidden
             this.Write("        private static partial ");
             
-            #line 73 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 76 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(BaseTypeName));
             
             #line default
             #line hidden
             this.Write(" Validate( ");
             
-            #line 73 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 76 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(BaseTypeName));
             
             #line default
             #line hidden
             this.Write(" value );\n");
             
-            #line 74 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 77 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
  } 
             
             #line default
             #line hidden
             this.Write("\n");
             
-            #line 76 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 79 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
  /* ToString */ 
             
             #line default
             #line hidden
             
-            #line 77 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 80 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
  if( !ValueOption.HasFlag( ValueOption.ToString ) ) { 
             
             #line default
             #line hidden
             this.Write("        //\n        // Default ToString()\n        //\n        public override string ToString()\n        {\n            return ");
             
-            #line 83 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 86 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ValueName));
             
             #line default
             #line hidden
             this.Write(".ToString() ?? \"\";\n        }\n");
             
-            #line 85 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 88 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
  } else { 
             
             #line default
             #line hidden
             this.Write("        //\n        // Custom ToString()\n        //\n        private partial string ToStringImpl();\n\n        public override string ToString()\n        {\n            return ToStringImpl();\n        }\n");
             
-            #line 95 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 98 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
  } 
             
             #line default
             #line hidden
             this.Write("\n        //----------------------------------------------------------------------\n        // Equality\n        //----------------------------------------------------------------------\n        public bool Equals( ");
             
-            #line 100 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 103 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(isClass ? "[AllowNull] " : ""));
             
             #line default
             #line hidden
             
-            #line 100 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 103 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Name));
             
             #line default
             #line hidden
             this.Write(" other )\n        {\n");
             
-            #line 102 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 105 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
  if( isClass ) { 
             
             #line default
             #line hidden
             this.Write("            if( ReferenceEquals( null, other ) )\n            {\n                return false;\n            }\n\n            if( ReferenceEquals( this, other ) )\n            {\n                return true;\n            }\n            return ");
             
-            #line 112 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 115 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ValueName));
             
             #line default
             #line hidden
             this.Write(" == other.");
             
-            #line 112 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 115 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ValueName));
             
             #line default
             #line hidden
             this.Write(";\n");
             
-            #line 113 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 116 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
  } else if( isStruct ) { 
             
             #line default
             #line hidden
             this.Write("            return Equals( ");
             
-            #line 114 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 117 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ValueName));
             
             #line default
             #line hidden
             this.Write(", other.");
             
-            #line 114 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 117 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ValueName));
             
             #line default
             #line hidden
             this.Write(" );\n");
             
-            #line 115 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 118 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
  } 
             
             #line default
             #line hidden
             this.Write("        }\n\n        public override bool Equals( [AllowNull] object obj )\n        {\n");
             
-            #line 120 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 123 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
  if( isClass ) { 
             
             #line default
             #line hidden
             this.Write("            if( ReferenceEquals( null, obj ) )\n            {\n                return false;\n            }\n\n            if( ReferenceEquals( this, obj ) )\n            {\n                return true;\n            }\n\n            if( obj.GetType() != this.GetType() )\n            {\n                return false;\n            }\n\n            return Equals( (");
             
-            #line 136 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 139 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Name));
             
             #line default
             #line hidden
             this.Write(")obj );\n");
             
-            #line 137 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 140 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
  } else if( isStruct ) { 
             
             #line default
             #line hidden
             this.Write("            return obj is ");
             
-            #line 138 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 141 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Name));
             
             #line default
             #line hidden
             this.Write(" other && Equals( other );\n");
             
-            #line 139 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 142 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
  } 
             
             #line default
             #line hidden
             this.Write("        }\n\n        // HashCode\n        public override int GetHashCode() => ");
             
-            #line 143 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 146 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ValueName));
             
             #line default
             #line hidden
             this.Write(".GetHashCode();\n\n        // Operator ==, !=\n        public static bool operator ==( ");
             
-            #line 146 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 149 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Name));
             
             #line default
             #line hidden
             this.Write(" a, ");
             
-            #line 146 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 149 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Name));
             
             #line default
             #line hidden
             this.Write(" b )\n        {\n");
             
-            #line 148 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 151 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
  if( isClass ) { 
             
             #line default
             #line hidden
             this.Write("            if( ReferenceEquals( a, b ) )\n            {\n                return true;\n            }\n\n            return a?.Equals( b ) ?? ReferenceEquals( null, b );\n");
             
-            #line 155 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 158 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
  } else if( isStruct ) { 
             
             #line default
             #line hidden
             this.Write("            return a.Equals( b );\n");
             
-            #line 157 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 160 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
  } 
             
             #line default
             #line hidden
             this.Write("        }\n\n        public static bool operator !=( ");
             
-            #line 160 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 163 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Name));
             
             #line default
             #line hidden
             this.Write(" a, ");
             
-            #line 160 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 163 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Name));
             
             #line default
             #line hidden
             this.Write(" b )\n        {\n            return !( a == b );\n        }\n\n");
             
-            #line 165 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 168 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
  if( ValueOption.HasFlag( ValueOption.Explicit ) ) { 
             
             #line default
             #line hidden
             this.Write("        //----------------------------------------------------------------------\n        // Explicit\n        //----------------------------------------------------------------------\n        public static explicit operator ");
             
-            #line 169 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 172 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(BaseTypeName));
             
             #line default
             #line hidden
             this.Write("( ");
             
-            #line 169 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 172 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Name));
             
             #line default
             #line hidden
             this.Write(" x )\n        {\n            return x.");
             
-            #line 171 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 174 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ValueName));
             
             #line default
             #line hidden
             this.Write(";\n        }\n\n        public static implicit operator ");
             
-            #line 174 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 177 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Name));
             
             #line default
             #line hidden
             this.Write("( ");
             
-            #line 174 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 177 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(BaseTypeName));
             
             #line default
             #line hidden
             this.Write(" value )\n        {\n            return new ");
             
-            #line 176 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 179 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Name));
             
             #line default
             #line hidden
             this.Write("( value );\n        }\n");
             
-            #line 178 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 181 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
  } else if( ValueOption.HasFlag( ValueOption.Implicit ) ) { 
             
             #line default
             #line hidden
             this.Write("        //----------------------------------------------------------------------\n        // Implicit\n        //----------------------------------------------------------------------\n        public static implicit operator ");
             
-            #line 182 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 185 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(BaseTypeName));
             
             #line default
             #line hidden
             this.Write("( ");
             
-            #line 182 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 185 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Name));
             
             #line default
             #line hidden
             this.Write(" x )\n        {\n            return x.");
             
-            #line 184 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 187 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ValueName));
             
             #line default
             #line hidden
             this.Write(";\n        }\n\n        public static implicit operator ");
             
-            #line 187 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 190 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Name));
             
             #line default
             #line hidden
             this.Write("( ");
             
-            #line 187 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 190 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(BaseTypeName));
             
             #line default
             #line hidden
             this.Write(" value )\n        {\n            return new ");
             
-            #line 189 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 192 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Name));
             
             #line default
             #line hidden
             this.Write("( value );\n        }\n");
             
-            #line 191 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 194 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
  } 
             
             #line default
             #line hidden
             this.Write("\n");
             
-            #line 193 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 196 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
  if( ValueOption.HasFlag( ValueOption.Comparable ) ) { 
             
             #line default
             #line hidden
             this.Write("        //----------------------------------------------------------------------\n        // Comparable\n        //----------------------------------------------------------------------\n        public int CompareTo( ");
             
-            #line 197 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 200 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Name));
             
             #line default
             #line hidden
             this.Write(" other )\n        {\n            if( ReferenceEquals( this, other ) )\n            {\n                return 0;\n            }\n\n            if( ReferenceEquals( null, other ) )\n            {\n                return 1;\n            }\n\n            return ");
             
-            #line 209 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 212 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ValueName));
             
             #line default
             #line hidden
             this.Write(".CompareTo( other.");
             
-            #line 209 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 212 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ValueName));
             
             #line default
             #line hidden
             this.Write(" );\n        }\n");
             
-            #line 211 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 214 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
  } 
             
             #line default
             #line hidden
             this.Write("\n    }\n\n");
             
-            #line 215 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 218 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
  if( !string.IsNullOrEmpty( Namespace ) ) { 
             
             #line default
             #line hidden
             this.Write("}\n");
             
-            #line 217 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
+            #line 220 "/Users/hiroaki/Develop/Project/OSS/ValueObjectGenerator/Generator/Sources/ValueObjectTemplate.tt"
  } 
             
             #line default

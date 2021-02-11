@@ -1,7 +1,0 @@
-<#@ template language="C#" visibility="internal" linePragmas="false" #>
-using System;
-
-namespace ValueObjectGenerator
-{
-    internal class AllowEmptyStringAttribute : Attribute {}
-}

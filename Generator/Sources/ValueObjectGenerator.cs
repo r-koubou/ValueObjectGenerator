@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 using Microsoft.CodeAnalysis;
@@ -8,7 +9,6 @@ using SGFramework.TypeDeclaration;
 
 using ValueObjectGenerator.ExtAttributes;
 using ValueObjectGenerator.ExtAttributes.Number;
-using ValueObjectGenerator.ExtAttributes.String;
 
 namespace ValueObjectGenerator
 {
@@ -19,24 +19,21 @@ namespace ValueObjectGenerator
         private static readonly AttributeTypeName RangeAttributeTypeName = new( "ValueRange" );
         private static readonly AttributeTypeName NotNegativeAttributeTypeName = new( "NotNegative" );
         private static readonly AttributeTypeName NotEmptyAttributeTypeName = new( "NotEmpty" );
-        private static readonly AttributeTypeName AllowEmptyStringAttributeTypeName = new( "AllowEmptyString" );
 
         public override TypeDeclarationSyntaxReceiver CreateSyntaxReceiver() => new( this );
 
         public override void SetupAttributeArgumentParser( Dictionary<AttributeTypeName, IAttributeArgumentParser> map )
         {
-            map[ ValueObjectAttributeTypeName ]      = new ValueObjectAttributeArgumentParser();
-            map[ RangeAttributeTypeName ]            = new RangeAttributeArgumentParser();
-            map[ NotNegativeAttributeTypeName ]      = new EmptyAttributeArgumentParser();
-            map[ NotEmptyAttributeTypeName ]         = new EmptyAttributeArgumentParser();
-            map[ AllowEmptyStringAttributeTypeName ] = new EmptyAttributeArgumentParser();
+            map[ ValueObjectAttributeTypeName ] = new ValueObjectAttributeArgumentParser();
+            map[ RangeAttributeTypeName ]       = new RangeAttributeArgumentParser();
+            map[ NotNegativeAttributeTypeName ] = new EmptyAttributeArgumentParser();
+            map[ NotEmptyAttributeTypeName ]    = new NotEmptyAttributeArgumentParser();
         }
 
         public bool ContainsAttribute( AttributeTypeName attributeTypeName ) =>
             attributeTypeName == ValueObjectAttributeTypeName ||
             attributeTypeName == RangeAttributeTypeName ||
             attributeTypeName == NotNegativeAttributeTypeName ||
-            attributeTypeName == AllowEmptyStringAttributeTypeName ||
             attributeTypeName == NotEmptyAttributeTypeName;
 
         public override void GenerateAttributeCode( GeneratorExecutionContext context )
@@ -44,7 +41,6 @@ namespace ValueObjectGenerator
             context.AddSource( ValueObjectAttributeTypeName.Value,      new ValueObjectAttributeTemplate().TransformText() );
             context.AddSource( RangeAttributeTypeName.Value,            new ValueRangeAttributeTemplate().TransformText() );
             context.AddSource( NotNegativeAttributeTypeName.Value,      new NotNegativeAttributeTemplate().TransformText() );
-            context.AddSource( AllowEmptyStringAttributeTypeName.Value, new AllowEmptyStringAttributeTemplate().TransformText() );
             context.AddSource( NotEmptyAttributeTypeName.Value,         new NotEmptyAttributeTemplate().TransformText() );
         }
 
@@ -71,12 +67,6 @@ namespace ValueObjectGenerator
             {
                 // "ValueObject" is NOT Require attribute
                 notNegativeAttributeParams = null!;
-            }
-
-            if( !attributeTypeList.TryGetValue( AllowEmptyStringAttributeTypeName, out var allowEmptyStringAttributeParams ) )
-            {
-                // "ValueObject" is NOT Require attribute
-                allowEmptyStringAttributeParams = null!;
             }
 
             if( !attributeTypeList.TryGetValue( NotEmptyAttributeTypeName, out var notEmptyAttributeParams ) )
@@ -121,6 +111,18 @@ namespace ValueObjectGenerator
             }
             #endregion
 
+            #region NotEmptyAttribute
+            var excludeWhiteSpace = false;
+
+            if( notEmptyAttributeParams != null )
+            {
+                if( notEmptyAttributeParams.TryGetValue( AttributeParameterNames.ExcludeWhiteSpace, out var v ) )
+                {
+                    _ = bool.TryParse( v.ToString(), out excludeWhiteSpace );
+                }
+            }
+            #endregion
+
             var template = new ValueObjectTemplate
             {
                 Namespace         = nameSpace,
@@ -133,7 +135,7 @@ namespace ValueObjectGenerator
                 Max               = maxValue.ToString(),
                 NotNegative       = notNegativeAttributeParams != null,
                 NotEmpty          = notEmptyAttributeParams != null,
-                AllowEmptyString  = allowEmptyStringAttributeParams != null
+                ExcludeWhiteSpace = excludeWhiteSpace
             };
 
             var code = template.TransformText();

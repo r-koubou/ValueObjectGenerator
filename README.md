@@ -2,10 +2,6 @@
 
 Generating code of value object by C# 9.0 [Source Generator](https://devblogs.microsoft.com/dotnet/introducing-c-source-generators/)
 
-
-
-## Simple
-
 Simple value objects can be created.
 
 
@@ -16,7 +12,8 @@ Simple value objects can be created.
 [ValueObject(typeof(int))]
 public partial class Sample // 'struct' also supporting
 {
-    // By default, the Validate method is implemented and the value is checked in the constructor
+    // By default, the Validate method is defined and called from constructor
+    // If ValueOption.NonValidating is set, Validate method will not be defined
     private static partial int Validate( int value ) => value;
 }
 ```
@@ -120,6 +117,7 @@ if set an`OptionFlags` value to ValueObjectAttribute, Generate code according to
 
 - NonValidation
 
+    - Don't genetate `Valid` method
     - Don't validate in constructor
 
 - Implicit / Explicit
@@ -139,6 +137,9 @@ if set an`OptionFlags` value to ValueObjectAttribute, Generate code according to
 ```c#
 [ValueObject( typeof(int), Option = ValueOption.NonValidating)]
 public partial class Sample {}
+
+// *Validate method will not be defined
+// private static partial int Validate( int value );
 ```
 
 ### Explicit
@@ -193,14 +194,13 @@ public static implicit operator Sample( int value )
 
 Provides presets for validation. In many cases, it is exclusive to the Validate method.
 
-### Limit values by range setting
+### Value range
 
 ```c#
 [ValueObject(typeof(int))]
 // Set an explicit range of values
 [ValueRange(0, 9999)]
-public partial class Count
-{}
+public partial class Count {}
 ```
 
 will be generated to following
@@ -214,7 +214,7 @@ public partial class Count : IEquatable<Count>
     {
         if( value < (0) || value > (9999) )
         {
-            throw new ArgumentOutOfRangeException( $"Hp : {value} (range:0 < 9999)" );
+            throw new ArgumentOutOfRangeException( $"(Count) Out of range : {value} (range:0 < 9999)" );
         }
         Value = value;
     }
@@ -225,7 +225,7 @@ public partial class Count : IEquatable<Count>
 
 
 
-### Limit values by non-negative
+### Not negative
 
 ```c#
 [ValueObject(typeof(int))]
@@ -244,7 +244,7 @@ public partial class Count : IEquatable<Count>
     {
         if( value < 0 )
         {
-            throw new ArgumentException( $"value is negative : {value}" );
+            throw new ArgumentException( $"(Count) value is negative : {value}" );
         }
         Value = value;
     }
@@ -255,35 +255,7 @@ public partial class Count : IEquatable<Count>
 
 
 
-### Allow empty string
-
-```c#
-[ValueObject(typeof(string))]
-[AllowEmptyString]
-public partial class Name {}
-```
-
-will be generated to following
-
-```c#
-public partial class Name : IEquatable<Count>
-{
-    public string Value { get; }
-
-    public AllowEmptyString( string value )
-    {
-        Value = string.IsNullOrEmpty( value ) ? string.Empty : value;
-    }
-  :
-  :
-}
-```
-
-
-
-### Deny empty
-
-NOTE: Require Linq
+### Not empty
 
 ```c#
 [ValueObject(typeof(string))]
@@ -294,15 +266,73 @@ public partial class Name {}
 will be generated to following
 
 ```c#
-public partial class Name : IEquatable<Count>
+public partial class Name : IEquatable<Name>
 {
     public string Value { get; }
 
-    public AllowEmptyString( string value )
+    public Name( string value )
+    {
+        if( string.IsNullOrEmpty( value ) || value.Trim().Length == 0 )
+        {
+            throw new ArgumentException( $"(Name) value is empty" );
+        }
+        Value = value;
+    }
+  :
+  :
+}
+```
+
+Note: if type is string, use string.IsNullOrEmpty, Trim. Otherwise use Linq.Any()
+
+e,g,
+
+```c#
+[ValueObject(typeof(string[]))]
+[NotEmpty]
+public partial class Names {}
+```
+
+will be generated to following
+
+```c#
+public partial class Names : IEquatable<Names>
+{
+    public string[] Value { get; }
+
+    public Names( string[] value )
     {
         if( !value.Any() )
         {
-            throw new ArgumentException( $"(Name) : value is empty" );
+            throw new ArgumentException( $"(Names) value is empty" );
+        }
+        Value = value;
+    }
+  :
+  :
+}
+```
+
+If you do not want to treat a string with only whitespace characters as Empty, set the **ExcludeWhiteSpace** argument to true.
+
+```c#
+[ValueObject(typeof(string))]
+[NotEmpty(ExcludeWhiteSpace=true)]
+public partial class Name {}
+```
+
+will be generated to following
+
+```c#
+public partial class Name : IEquatable<Name>
+{
+    public string Value { get; }
+
+    public Name( string value )
+    {
+        if( string.IsNullOrEmpty( value ) )
+        {
+            throw new ArgumentException( $"(Name) value is empty" );
         }
         Value = value;
     }

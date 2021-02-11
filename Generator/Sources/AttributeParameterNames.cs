@@ -9,5 +9,6 @@ namespace ValueObjectGenerator
         public static readonly AttributeParamName OptionFlags = new ( "flags" );
         public static readonly AttributeParamName Min = new ( "min" );
         public static readonly AttributeParamName Max = new ( "max" );
+        public static readonly AttributeParamName ExcludeWhiteSpace = new ( "excludeWhiteSpace" );
     }
 }
