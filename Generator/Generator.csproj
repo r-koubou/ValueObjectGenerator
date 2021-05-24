@@ -17,6 +17,7 @@
         <Description>Generating code of value object by C# 9.0 SourceGenerator</Description>
         <PackageProjectUrl>https://github.com/r-koubou/ValueObjectGenerator</PackageProjectUrl>
         <RepositoryUrl>https://github.com/r-koubou/ValueObjectGenerator.git</RepositoryUrl>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     </PropertyGroup>
 
     <ItemGroup>
