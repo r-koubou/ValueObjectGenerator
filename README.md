@@ -138,7 +138,7 @@ Add explicit operator
 <details><summary>Example</summary><div>
 
 ```c#
-[ValueObject( typeof(int), ValueOption.Explicit )]
+[ValueObject( typeof(int), Option = ValueOption.Explicit )]
 public partial class Sample {}
 ```
 
@@ -164,7 +164,7 @@ Add  implicit operator
 <details><summary>Example</summary><div>
 
 ```c#
-[ValueObject( typeof(int), ValueOption.Implicit )]
+[ValueObject( typeof(int), Option = ValueOption.Implicit )]
 public partial class Sample {}
 ```
 
@@ -191,7 +191,7 @@ Add  IComparable\<T\> implementation
 <details><summary>Example</summary><div>
 
 ```c#
-[ValueObject( typeof(int), ValueOption.Implicit )]
+[ValueObject( typeof(int), Option = ValueOption.Implicit )]
 public partial class Sample {}
 ```
 
@@ -232,7 +232,7 @@ public override string ToString()
 <details><summary>Example</summary><div>
 
 ```c#
-[ValueObject( typeof(int), ValueOption.ToString )]
+[ValueObject( typeof(int), Option = ValueOption.ToString )]
 public partial class Sample {}
 ```
 
