@@ -145,7 +145,7 @@ public partial class Sample {}
 ### Explicit
 
 ```c#
-[ValueObject( typeof(int), ValueOption.Explicit )]
+[ValueObject( typeof(int), Option = ValueOption.Explicit )]
 public partial class Sample {}
 ```
 
@@ -166,7 +166,7 @@ public static implicit operator Sample( int value )
 ### Implicit
 
 ```c#
-[ValueObject( typeof(int), ValueOption.Implicit )]
+[ValueObject( typeof(int), Option = ValueOption.Implicit )]
 public partial class Sample {}
 ```
 
