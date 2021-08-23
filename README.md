@@ -150,7 +150,7 @@ public static explicit operator int( Sample x )
     return x.Value;
 }
 
-public static implicit operator Sample( int value )
+public static explicit operator Sample( int value )
 {
     return new Sample( value );
 }

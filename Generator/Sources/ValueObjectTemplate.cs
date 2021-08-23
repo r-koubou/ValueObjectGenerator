@@ -450,7 +450,7 @@ namespace ValueObjectGenerator
 
             #line default
             #line hidden
-            this.Write(";\n        }\n\n        public static implicit operator ");
+            this.Write(";\n        }\n\n        public static explicit operator ");
             this.Write(this.ToStringHelper.ToStringWithCulture(Name));
 
             #line default

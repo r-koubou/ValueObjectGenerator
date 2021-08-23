@@ -179,7 +179,7 @@ namespace <#= Namespace #>
             return x.<#= ValueName #>;
         }
 
-        public static implicit operator <#= Name #>( <#= BaseTypeName #> value )
+        public static explicit operator <#= Name #>( <#= BaseTypeName #> value )
         {
             return new <#= Name #>( value );
         }
