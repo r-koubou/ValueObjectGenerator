@@ -119,7 +119,7 @@
 
     <ItemGroup>
         <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
-        <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.11.0" PrivateAssets="all" />
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.9.0" PrivateAssets="all" />
         <PackageReference Include="SGFramework" Version="1.1.1" />
         <PackageReference Include="System.CodeDom" Version="6.0.0" />
     </ItemGroup>
