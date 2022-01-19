@@ -8,6 +8,12 @@
         <LangVersion>9</LangVersion>
         <NoWarn>$(NoWarn);1591</NoWarn>
         <Nullable>enable</Nullable>
+
+        <IncludeBuildOutput>false</IncludeBuildOutput>
+        <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+        <IncludeSymbols>false</IncludeSymbols>
+        <DevelopmentDependency>true</DevelopmentDependency>
+
         <!-- NuGet -->
         <PackageId>ValueObjectGenerator</PackageId>
         <Authors>R-Koubou</Authors>
