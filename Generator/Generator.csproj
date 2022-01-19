@@ -8,6 +8,7 @@
         <LangVersion>9</LangVersion>
         <NoWarn>$(NoWarn);1591</NoWarn>
         <Nullable>enable</Nullable>
+        <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
         <!-- NuGet -->
         <PackageId>ValueObjectGenerator</PackageId>
         <Authors>R-Koubou</Authors>
