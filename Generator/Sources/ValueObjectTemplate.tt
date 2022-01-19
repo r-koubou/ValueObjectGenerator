@@ -32,6 +32,11 @@ namespace <#= Namespace #>
     public partial <#= declarationType #> <#= Name #> : IEquatable<<#= Name #>><#= ValueOption.HasFlag( ValueOption.Comparable ) ? $", IComparable<{Name}>" : "" #>
     {
         public <#= BaseTypeName #> <#= ValueName #> { get; }
+<# /* Min-Max Variable */ #>
+<# if( requireMinMax ) { #>
+        public static readonly <#= Name #> Min = new <#= Name #>( <#= Min #> );
+        public static readonly <#= Name #> Max = new <#= Name #>( <#= Max #> );
+<# } #>
 
         public <#= Name #>( <#= BaseTypeName #> value )
         {
@@ -174,7 +179,7 @@ namespace <#= Namespace #>
             return x.<#= ValueName #>;
         }
 
-        public static implicit operator <#= Name #>( <#= BaseTypeName #> value )
+        public static explicit operator <#= Name #>( <#= BaseTypeName #> value )
         {
             return new <#= Name #>( value );
         }

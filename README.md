@@ -86,7 +86,7 @@ public partial struct Sample : IEquatable<Sample>
 
 Type of value. use typeof syntax.
 
-### ValiableName
+### ValueName
 
 Applied to variable name (default: "Value")
 
@@ -115,24 +115,12 @@ Flags to specify additional value specifications.
 
 if set an`OptionFlags` value to ValueObjectAttribute, Generate code according to the flag value
 
-- NonValidation
+### NonValidating
 
-    - Don't genetate `Valid` method
-    - Don't validate in constructor
+- Don't genetate `Valid` method
+- Don't validate in constructor
 
-- Implicit / Explicit
-
-    - Add  implicit / explicit operator
-
-- Comparable
-
-  - Add  IComparable\<T\> implementation
-
-
-
-
-### NonValidation
-
+<details><summary>Example</summary><div>
 
 ```c#
 [ValueObject( typeof(int), Option = ValueOption.NonValidating)]
@@ -142,7 +130,12 @@ public partial class Sample {}
 // private static partial int Validate( int value );
 ```
 
+</div></details>
+
 ### Explicit
+
+Add explicit operator
+<details><summary>Example</summary><div>
 
 ```c#
 [ValueObject( typeof(int), Option = ValueOption.Explicit )]
@@ -157,13 +150,18 @@ public static explicit operator int( Sample x )
     return x.Value;
 }
 
-public static implicit operator Sample( int value )
+public static explicit operator Sample( int value )
 {
     return new Sample( value );
 }
 ```
+</div></details>
 
 ### Implicit
+
+Add  implicit operator
+
+<details><summary>Example</summary><div>
 
 ```c#
 [ValueObject( typeof(int), Option = ValueOption.Implicit )]
@@ -184,17 +182,91 @@ public static implicit operator Sample( int value )
 }
 ```
 
+</div></details>
 
+### Comparable
+
+Add  IComparable\<T\> implementation
+
+<details><summary>Example</summary><div>
+
+```c#
+[ValueObject( typeof(int), Option = ValueOption.Implicit )]
+public partial class Sample {}
+```
+
+will be generated to following
+
+```c#
+public int CompareTo( Sample other )
+{
+    if( ReferenceEquals( this, other ) )
+    {
+        return 0;
+    }
+
+    if( ReferenceEquals( null, other ) )
+    {
+        return 1;
+    }
+
+    return Value.CompareTo( other.Value );
+}
+```
+
+</div></details>
+
+### ToString
+
+Add ToStringImpl Method for custom ToString implementarion
+
+#### Default
+
+```c#
+public override string ToString()
+{
+    return Value.ToString() ?? "";
+}
+```
+
+<details><summary>Example</summary><div>
+
+```c#
+[ValueObject( typeof(int), Option = ValueOption.ToString )]
+public partial class Sample {}
+```
+
+will be generated to following
+
+```c#
+private partial string ToStringImpl();
+
+public override string ToString()
+{
+    return ToStringImpl();
+}
+```
+
+Default
+
+```c#
+public override string ToString()
+{
+    return Value.ToString() ?? "";
+}
+```
+
+</div></details>
 
 ------
-
-
 
 ## Available other attribute
 
 Provides presets for validation. In many cases, it is exclusive to the Validate method.
 
 ### Value range
+
+<details><summary>Example</summary><div>
 
 ```c#
 [ValueObject(typeof(int))]
@@ -223,9 +295,11 @@ public partial class Count : IEquatable<Count>
 }
 ```
 
-
+</div></details>
 
 ### Not negative
+
+<details><summary>Example</summary><div>
 
 ```c#
 [ValueObject(typeof(int))]
@@ -253,9 +327,11 @@ public partial class Count : IEquatable<Count>
 }
 ```
 
-
+</div></details>
 
 ### Not empty
+
+<details><summary>Example</summary><div>
 
 ```c#
 [ValueObject(typeof(string))]
@@ -264,6 +340,7 @@ public partial class Name {}
 ```
 
 will be generated to following
+
 
 ```c#
 public partial class Name : IEquatable<Name>
@@ -278,14 +355,12 @@ public partial class Name : IEquatable<Name>
         }
         Value = value;
     }
-  :
-  :
 }
 ```
 
 Note: if type is string, use string.IsNullOrEmpty, Trim. Otherwise use Linq.Any()
 
-e,g,
+e.g.
 
 ```c#
 [ValueObject(typeof(string[]))]
@@ -340,3 +415,5 @@ public partial class Name : IEquatable<Name>
   :
 }
 ```
+
+</div></details>

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 
 using Microsoft.CodeAnalysis;
@@ -38,13 +37,14 @@ namespace ValueObjectGenerator
 
         public override void GenerateAttributeCode( GeneratorExecutionContext context )
         {
-            context.AddSource( ValueObjectAttributeTypeName.Value,      new ValueObjectAttributeTemplate().TransformText() );
-            context.AddSource( RangeAttributeTypeName.Value,            new ValueRangeAttributeTemplate().TransformText() );
-            context.AddSource( NotNegativeAttributeTypeName.Value,      new NotNegativeAttributeTemplate().TransformText() );
-            context.AddSource( NotEmptyAttributeTypeName.Value,         new NotEmptyAttributeTemplate().TransformText() );
+            context.AddSource( ValueObjectAttributeTypeName.Value, new ValueObjectAttributeTemplate().TransformText() );
+            context.AddSource( RangeAttributeTypeName.Value,       new ValueRangeAttributeTemplate().TransformText() );
+            context.AddSource( NotNegativeAttributeTypeName.Value, new NotNegativeAttributeTemplate().TransformText() );
+            context.AddSource( NotEmptyAttributeTypeName.Value,    new NotEmptyAttributeTemplate().TransformText() );
         }
 
         protected override string GenerateCode(
+            GeneratorExecutionContext context,
             TypeDeclarationSyntax declaration,
             string nameSpace,
             string typeName,

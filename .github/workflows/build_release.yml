@@ -2,7 +2,7 @@ name: Build Release
 on:
   push:
     tags:
-      - ver-*.*.*
+      - v*.*.*
 
 jobs:
   nuget_deploy:
@@ -16,7 +16,7 @@ jobs:
     - uses: actions/setup-dotnet@v1
       with:
         dotnet-version: '5.0.100'
-    - run: echo "VER_TAG=${GITHUB_REF#refs/tags/ver-}" >> $GITHUB_ENV
+    - run: echo "VER_TAG=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
     - run: dotnet build --configuration Release -p:Version=${{ env.VER_TAG }} Generator
     - run: dotnet pack --configuration Release --no-build -p:Version=${{ env.VER_TAG }} -o ./publish Generator
     - uses: actions/upload-artifact@v2
