@@ -9,11 +9,6 @@
         <NoWarn>$(NoWarn);1591</NoWarn>
         <Nullable>enable</Nullable>
 
-        <IncludeBuildOutput>false</IncludeBuildOutput>
-        <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
-        <IncludeSymbols>false</IncludeSymbols>
-        <DevelopmentDependency>true</DevelopmentDependency>
-
         <!-- NuGet -->
         <PackageId>ValueObjectGenerator</PackageId>
         <Authors>R-Koubou</Authors>
@@ -126,8 +121,8 @@
     <ItemGroup>
         <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
         <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.8.0" PrivateAssets="all" />
-        <PackageReference Include="SGFramework" Version="1.1.2" />
-        <PackageReference Include="System.CodeDom" Version="6.0.0" />
+        <PackageReference Include="SGFramework" Version="1.2.0" />
+        <PackageReference Include="System.CodeDom" Version="5.0.0" />
     </ItemGroup>
 
 </Project>
